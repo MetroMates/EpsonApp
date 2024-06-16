@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:path/path.dart' as path;
 import 'package:epson_app/services/epson/scan_type.dart';
 
 import '../../env/env_constant.dart';
@@ -9,14 +10,13 @@ import '../../env/env_constant.dart';
 final class EpsonService {
   static final Dio _dio = Dio();
 
+  static final _host = Env.hostName;
   // ignore: constant_identifier_names
-  static const _HOST = Env.hostName;
+  static final String _clientId = Env.clientID;
   // ignore: constant_identifier_names
-  static const String _CLIENT_ID = Env.clientID;
+  static final String _secretId = Env.clientSecretID;
   // ignore: constant_identifier_names
-  static const String _SECRET = Env.clientSecretID;
-  // ignore: constant_identifier_names
-  static const String _DEVICE = 'epson_tds3@print.epsonconnect.com';
+  static const String _device = 'epson_tds@print.epsonconnect.com';
 
   /// deviceID
   static String _subjectId = '';
@@ -26,11 +26,11 @@ final class EpsonService {
       (_subjectId.isEmpty || _accessToken.isEmpty) ? false : true;
 
   /// subjectID, accessToken 값 생성
-  static Future<void> initAuth() async {
+  static Future<void> createAuth() async {
     // Authentication
-    const String authUri =
-        'https://$_HOST/api/1/printing/oauth2/auth/token?subject=printer';
-    final String auth = base64Encode(utf8.encode('$_CLIENT_ID:$_SECRET'));
+    final String authUri =
+        'https://$_host/api/1/printing/oauth2/auth/token?subject=printer';
+    final String auth = base64Encode(utf8.encode('$_clientId:$_secretId'));
 
     log('AUTH : $auth');
 
@@ -40,7 +40,7 @@ final class EpsonService {
     };
     final Map<String, String> queryParams = {
       'grant_type': 'password',
-      'username': _DEVICE,
+      'username': _device,
       'password': '',
     };
 
@@ -80,7 +80,7 @@ final class EpsonService {
     try {
       // 스캔 등록하기
       final String addUri =
-          'https://$_HOST/api/1/scanning/scanners/$_subjectId/destinations';
+          'https://$_host/api/1/scanning/scanners/$_subjectId/destinations';
 
       final Map<String, dynamic> dataParam = {
         'alias_name': 'ScanTitle2',
@@ -121,7 +121,7 @@ final class EpsonService {
     }
   }
 
-  static printQueue() async {
+  static printQueue(String filePath) async {
     if (!_isTokenAndDeviceIdExist) {
       log('Token 데이터가 없습니다.');
       return;
@@ -129,7 +129,7 @@ final class EpsonService {
 
     // Create print job
     final String jobUri =
-        'https://$_HOST/api/1/printing/printers/$_subjectId/jobs';
+        'https://$_host/api/1/printing/printers/$_subjectId/jobs';
 
     final Map<String, String> jobHeaders = {
       'Authorization': 'Bearer $_accessToken',
@@ -164,10 +164,19 @@ final class EpsonService {
     final String baseUri = jobBody['upload_uri'];
 
     // Upload print file
-    const String localFilePath = './SampleDoc.pdf';
+    final String localFilePath = filePath; //'./SampleDoc.pdf';
     final File file = File(localFilePath);
-    final String fileName = '1${file.uri.pathSegments.last.split('.').last}';
+    final String fileName = '1.${file.uri.pathSegments.last.split('.').last}';
     final String uploadUri = '$baseUri&File=$fileName';
+
+    if (!file.existsSync()) {
+      log('No file $fileName : $filePath');
+      return;
+    }
+
+    log('fileName : $fileName');
+    log('UploadURI : $uploadUri');
+    log('file:  $file');
 
     final Map<String, String> uploadHeaders = {
       'Content-Length': file.lengthSync().toString(),
@@ -197,7 +206,7 @@ final class EpsonService {
 
     // Execute print
     final String printUri =
-        'https://$_HOST/api/1/printing/printers/$_subjectId/jobs/$jobId/print';
+        'https://$_host/api/1/printing/printers/$_subjectId/jobs/$jobId/print';
 
     final Map<String, String> printHeaders = {
       'Authorization': 'Bearer $_accessToken',
@@ -223,5 +232,55 @@ final class EpsonService {
     }
 
     log('Print executed successfully');
+  }
+
+  static getDeviceInfo() async {
+    //   /api/1/printing/printers/{device_id}
+    final String addUri = 'https://$_host/api/1/printing/printers/$_subjectId';
+
+    final Response addResponse = await _dio.get(
+      addUri,
+      // data: jsonEncode(dataParam),
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $_accessToken',
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      ),
+    );
+
+    if (addResponse.statusCode == HttpStatus.ok) {
+      log(addResponse.data.toString());
+    }
+  }
+
+  dioGetExample({
+    Options? header,
+    Object? parameter,
+    required String endPoint,
+  }) async {
+    final String uri = 'https://$_host$endPoint';
+
+    final Options? head;
+    if (header == null) {
+      head = Options(
+        headers: {
+          'Authorization': 'Bearer $_accessToken',
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      );
+    } else {
+      head = header;
+    }
+
+    final Response response = await _dio.get(
+      uri,
+      data: parameter,
+      options: head,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      return response.data;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:epson_app/env/env_constant.dart';
 import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,8 @@ import 'start_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageService.init();
-  await EpsonService.initAuth();
+  await Env.initEnv(isDebug: true);
+  await EpsonService.createAuth();
 
   runApp(const MyApp());
 }
