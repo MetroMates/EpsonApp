@@ -124,8 +124,8 @@ ios/firebase_app_id_file.json
 macos/firebase_app_id_file.json
 **/Podfile.lock
 
-**/Info.plist
-**/AndroidManifest.xml
+# **/Info.plist
+# **/AndroidManifest.xml
 
 
 
