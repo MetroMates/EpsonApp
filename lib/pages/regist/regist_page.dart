@@ -8,21 +8,20 @@ final class RegistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                const Text('스캔 목록에 넣어보기'),
-                TextButton(
-                    onPressed: () {
-                      EpsonService.scanQueue();
-                    },
-                    child: const Text('동작')),
-              ],
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              const Text('스캔 목록에 넣어보기'),
+              TextButton(
+                  onPressed: () {
+                    EpsonService.scanQueue();
+                  },
+                  child: const Text('동작')),
+            ],
+          ),
+        ],
       ),
     );
   }

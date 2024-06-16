@@ -16,7 +16,7 @@ final class EpsonService {
   // ignore: constant_identifier_names
   static const String _SECRET = Env.clientSecretID;
   // ignore: constant_identifier_names
-  static const String _DEVICE = 'epson_tds@print.epsonconnect.com';
+  static const String _DEVICE = 'epson_tds3@print.epsonconnect.com';
 
   /// deviceID
   static String _subjectId = '';
@@ -83,7 +83,7 @@ final class EpsonService {
           'https://$_HOST/api/1/scanning/scanners/$_subjectId/destinations';
 
       final Map<String, dynamic> dataParam = {
-        'alias_name': 'ScanTitle',
+        'alias_name': 'ScanTitle2',
         'type': ScanType.mail.name,
         'destination': 'swjtwin@naver.com'
       };
