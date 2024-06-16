@@ -16,7 +16,7 @@ final class EpsonService {
   // ignore: constant_identifier_names
   static const String _SECRET = Env.clientSecretID;
   // ignore: constant_identifier_names
-  static const String _DEVICE = 'swjtwin@naver.com';
+  static const String _DEVICE = 'epson_tds@print.epsonconnect.com';
 
   /// deviceID
   static String _subjectId = '';
@@ -102,7 +102,7 @@ final class EpsonService {
       if (addResponse.statusCode != HttpStatus.ok) {
         log('Register scan destination failed: ${addResponse.statusCode}');
         log(addResponse.data.toString());
-        exit(1);
+        return;
       }
 
       log('2. Register scan destination: ----------------------');
@@ -117,7 +117,7 @@ final class EpsonService {
         log('Error sending request!');
         log('${e.message}');
       }
-      exit(1);
+      return;
     }
   }
 
@@ -150,13 +150,13 @@ final class EpsonService {
       );
     } catch (e) {
       log('Error during job creation: $e');
-      exit(1);
+      return;
     }
 
     if (jobResponse.statusCode != HttpStatus.created) {
       log('Job creation failed: ${jobResponse.statusCode}');
       log(jobResponse.data);
-      exit(1);
+      return;
     }
 
     final Map<String, dynamic> jobBody = jobResponse.data;
@@ -187,12 +187,12 @@ final class EpsonService {
       );
     } catch (e) {
       log('Error during file upload: $e');
-      exit(1);
+      return;
     }
 
     if (uploadResponse.statusCode != HttpStatus.ok) {
       log('File upload failed: ${uploadResponse.statusCode}');
-      exit(1);
+      return;
     }
 
     // Execute print
@@ -213,13 +213,13 @@ final class EpsonService {
       );
     } catch (e) {
       log('Error during print execution: $e');
-      exit(1);
+      return;
     }
 
     if (printResponse.statusCode != HttpStatus.ok) {
       log('Print execution failed: ${printResponse.statusCode}');
       log(printResponse.data);
-      exit(1);
+      return;
     }
 
     log('Print executed successfully');

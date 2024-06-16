@@ -1,4 +1,5 @@
 import 'package:epson_app/pages/home/home_page.dart';
+import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -8,7 +9,7 @@ final class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const GetMaterialApp(
-      home: HomePage(),
+      home: RegistPage(),
     );
   }
 }
