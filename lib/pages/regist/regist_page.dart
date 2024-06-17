@@ -11,6 +11,15 @@ final class RegistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              child: Text('Epson Printer'),
+            ),
+          ],
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

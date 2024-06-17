@@ -2,72 +2,78 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:epson_app/services/dio_service.dart';
 import 'package:path/path.dart' as path;
 import 'package:epson_app/services/epson/scan_type.dart';
 
 import '../../env/env_constant.dart';
 
+// 1. 관리자가 프린터를 등록하고 epson connect에 가입을 하면 이메일로 clientID, secterID를 받는다.
+// 2. 받은 키값들과 프린터 이메일로 subjectID, token을 받는다. (token은 60분 유효)
+
 final class EpsonService {
-  static final Dio _dio = Dio();
+  static final _dio = DioService();
 
-  static final _host = Env.hostName;
-  // ignore: constant_identifier_names
+  // subjectID, token를 받아오기 위한 Env에서 받아오는 키값들 -> 추후 파이어베이스에서 받아온다.
+  static final String _host = Env.hostName;
   static final String _clientId = Env.clientID;
-  // ignore: constant_identifier_names
   static final String _secretId = Env.clientSecretID;
-  // ignore: constant_identifier_names
-  static const String _device = 'epson_tds@print.epsonconnect.com';
+  static const String _device = 'epson_tds2@print.epsonconnect.com';
 
-  /// deviceID
+  // 2번을 통해 받아오는 값들 -> 앱 시작시 파이어베이스에서 받아온 값들로 api통신 후 값 할당
   static String _subjectId = '';
   static String _accessToken = '';
 
+  // 2번 api 통신후 받아온 값 여부
   static bool get _isTokenAndDeviceIdExist =>
       (_subjectId.isEmpty || _accessToken.isEmpty) ? false : true;
 
-  /// subjectID, accessToken 값 생성
+  static Options get _commonHeader => Options(
+        headers: {
+          'Authorization': 'Bearer $_accessToken',
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      );
+
+  /// 2번 API 통신 (Authentication API)
   static Future<void> createAuth() async {
-    // Authentication
-    final String authUri =
-        'https://$_host/api/1/printing/oauth2/auth/token?subject=printer';
+    // Header Auth
     final String auth = base64Encode(utf8.encode('$_clientId:$_secretId'));
 
     log('AUTH : $auth');
 
+    // Header
     final Map<String, String> authHeaders = {
       'Authorization': 'Basic $auth',
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
     };
+
+    // Parameter
     final Map<String, String> queryParams = {
       'grant_type': 'password',
       'username': _device,
       'password': '',
     };
 
-    Response authResponse;
     try {
-      authResponse = await _dio.post(
-        authUri,
-        options: Options(headers: authHeaders),
-        data: queryParams,
+      // Post 통신
+      final authResponse = await _dio.post(
+        uri: 'https://$_host/api/1/printing/oauth2/auth/token?subject=printer',
+        header: Options(headers: authHeaders),
+        parameter: queryParams,
       );
+
+      // 통신 성공 후 받아온 body 값
+      final Map<String, dynamic> authBody = authResponse.data;
+
+      log('AuthBODY : $authBody');
+
+      // 값 할당
+      _subjectId = authBody['subject_id'] ?? '';
+      _accessToken = authBody['access_token'] ?? '';
     } catch (e) {
       log('Error during authentication: $e');
-      return;
     }
-
-    if (authResponse.statusCode != HttpStatus.ok) {
-      log('Authentication failed: ${authResponse.statusCode}');
-      log(authResponse.data);
-      return;
-    }
-
-    final Map<String, dynamic> authBody = authResponse.data;
-
-    log('AuthBODY : $authBody');
-
-    _subjectId = authBody['subject_id'] ?? '';
-    _accessToken = authBody['access_token'] ?? '';
   }
 
   /// Scan Method
@@ -79,8 +85,6 @@ final class EpsonService {
 
     try {
       // 스캔 등록하기
-      final String addUri =
-          'https://$_host/api/1/scanning/scanners/$_subjectId/destinations';
 
       final Map<String, dynamic> dataParam = {
         'alias_name': 'ScanTitle2',
@@ -89,14 +93,9 @@ final class EpsonService {
       };
 
       final Response addResponse = await _dio.post(
-        addUri,
-        data: jsonEncode(dataParam),
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $_accessToken',
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-        ),
+        uri: 'https://$_host/api/1/scanning/scanners/$_subjectId/destinations',
+        parameter: jsonEncode(dataParam),
+        header: _commonHeader,
       );
 
       if (addResponse.statusCode != HttpStatus.ok) {
@@ -106,7 +105,7 @@ final class EpsonService {
       }
 
       log('2. Register scan destination: ----------------------');
-      log(addUri);
+
       log(dataParam.toString());
       log(addResponse.data.toString());
     } on DioException catch (e) {
@@ -121,166 +120,128 @@ final class EpsonService {
     }
   }
 
-  static printQueue(String filePath) async {
+  /// 프린터 인쇄 작업
+  static Future<void> printQueue(String filePath) async {
     if (!_isTokenAndDeviceIdExist) {
       log('Token 데이터가 없습니다.');
       return;
     }
-
-    // Create print job
-    final String jobUri =
-        'https://$_host/api/1/printing/printers/$_subjectId/jobs';
-
-    final Map<String, String> jobHeaders = {
-      'Authorization': 'Bearer $_accessToken',
-      'Content-Type': 'application/json;charset=utf-8',
-    };
 
     final Map<String, String> jobData = {
       'job_name': 'SampleJob1',
       'print_mode': 'document',
     };
 
-    Response jobResponse;
-    try {
-      jobResponse = await _dio.post(
-        jobUri,
-        options: Options(headers: jobHeaders),
-        data: json.encode(jobData),
-      );
-    } catch (e) {
-      log('Error during job creation: $e');
-      return;
-    }
-
-    if (jobResponse.statusCode != HttpStatus.created) {
-      log('Job creation failed: ${jobResponse.statusCode}');
-      log(jobResponse.data);
-      return;
-    }
+    // 설정 작업
+    final jobResponse = await createPrintJob(jobData);
+    if (jobResponse == null) return;
 
     final Map<String, dynamic> jobBody = jobResponse.data;
     final String jobId = jobBody['id'];
     final String baseUri = jobBody['upload_uri'];
 
-    // Upload print file
-    final String localFilePath = filePath; //'./SampleDoc.pdf';
-    final File file = File(localFilePath);
+    // 파일 업로드 작업
+    final uploadResponse = await uploadPrintFile(filePath, baseUri);
+    if (uploadResponse == null) return;
+
+    // 인쇄 작업
+    final printResponse = await executePrintJob(jobId);
+    if (printResponse == null) return;
+
+    log('Print executed successfully');
+  }
+
+  /// 프린터 정보 가져오기
+  static getDeviceInfo() async {
+    try {
+      final data = await _dio.get(
+        header: _commonHeader,
+        endPoint: 'https://$_host/api/1/printing/printers/$_subjectId',
+      );
+      log(data.toString());
+    } catch (e) {
+      log('Faild get device: $e');
+      return;
+    }
+  }
+
+  static Future<Response?> createPrintJob(Map<String, String> jobData) async {
+    log('Create--------------------------------------------------------');
+    try {
+      final response = await _dio.post(
+        uri: 'https://$_host/api/1/printing/printers/$_subjectId/jobs',
+        parameter: json.encode(jobData),
+        header: _commonHeader,
+      );
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return response;
+      } else {
+        log('Job creation failed: ${response.statusCode}');
+        log(response.data);
+        return null;
+      }
+    } catch (e) {
+      log('Error during job creation: $e');
+      return null;
+    }
+  }
+
+  static Future<Response?> uploadPrintFile(
+      String filePath, String baseUri) async {
+    log('Upload--------------------------------------------------------');
+    final file = File(filePath);
+    if (!file.existsSync()) {
+      log('No file found at path: $filePath');
+      return null;
+    }
+    // final String fileName = file.path.split('/').last;
     final String fileName = '1.${file.uri.pathSegments.last.split('.').last}';
     final String uploadUri = '$baseUri&File=$fileName';
 
-    if (!file.existsSync()) {
-      log('No file $fileName : $filePath');
-      return;
-    }
-
     log('fileName : $fileName');
     log('UploadURI : $uploadUri');
-    log('file:  $file');
+    log('fileSize : ${file.lengthSync().toString()}');
 
     final Map<String, String> uploadHeaders = {
       'Content-Length': file.lengthSync().toString(),
       'Content-Type': 'application/octet-stream',
     };
-
-    Response uploadResponse;
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(filePath, filename: fileName),
+    });
     try {
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(localFilePath, filename: fileName),
-      });
-
-      uploadResponse = await _dio.post(
-        uploadUri,
-        data: formData,
-        options: Options(headers: uploadHeaders),
+      final response = await _dio.post(
+        uri: uploadUri,
+        parameter: formData,
+        header: Options(headers: uploadHeaders),
       );
+
+      if (response.statusCode == HttpStatus.ok) {
+        return response;
+      } else {
+        log('File upload failed: ${response.statusCode}');
+        return null;
+      }
     } catch (e) {
       log('Error during file upload: $e');
-      return;
+      return null;
     }
+  }
 
-    if (uploadResponse.statusCode != HttpStatus.ok) {
-      log('File upload failed: ${uploadResponse.statusCode}');
-      return;
-    }
-
-    // Execute print
-    final String printUri =
-        'https://$_host/api/1/printing/printers/$_subjectId/jobs/$jobId/print';
-
-    final Map<String, String> printHeaders = {
-      'Authorization': 'Bearer $_accessToken',
-      'Content-Type': 'application/json; charset=utf-8',
-    };
-
-    Response printResponse;
+  static Future<Response?> executePrintJob(String jobId) async {
+    log('Excute--------------------------------------------------------');
     try {
-      printResponse = await _dio.post(
-        printUri,
-        options: Options(headers: printHeaders),
-        data: json.encode({}),
+      final response = await _dio.post(
+        uri:
+            'https://$_host/api/1/printing/printers/$_subjectId/jobs/$jobId/print',
+        parameter: json.encode({}),
+        header: _commonHeader,
       );
+
+      return response;
     } catch (e) {
       log('Error during print execution: $e');
-      return;
-    }
-
-    if (printResponse.statusCode != HttpStatus.ok) {
-      log('Print execution failed: ${printResponse.statusCode}');
-      log(printResponse.data);
-      return;
-    }
-
-    log('Print executed successfully');
-  }
-
-  static getDeviceInfo() async {
-    //   /api/1/printing/printers/{device_id}
-    final String addUri = 'https://$_host/api/1/printing/printers/$_subjectId';
-
-    final Response addResponse = await _dio.get(
-      addUri,
-      // data: jsonEncode(dataParam),
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $_accessToken',
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      ),
-    );
-
-    if (addResponse.statusCode == HttpStatus.ok) {
-      log(addResponse.data.toString());
-    }
-  }
-
-  dioGetExample({
-    Options? header,
-    Object? parameter,
-    required String endPoint,
-  }) async {
-    final String uri = 'https://$_host$endPoint';
-
-    final Options? head;
-    if (header == null) {
-      head = Options(
-        headers: {
-          'Authorization': 'Bearer $_accessToken',
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-      );
-    } else {
-      head = header;
-    }
-
-    final Response response = await _dio.get(
-      uri,
-      data: parameter,
-      options: head,
-    );
-
-    if (response.statusCode == HttpStatus.ok) {
-      return response.data;
+      return null;
     }
   }
 }
