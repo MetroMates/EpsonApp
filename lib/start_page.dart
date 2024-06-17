@@ -1,4 +1,3 @@
-import 'package:epson_app/pages/home/home_page.dart';
 import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';

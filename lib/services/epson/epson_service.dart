@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:epson_app/services/dio_service.dart';
-import 'package:path/path.dart' as path;
+// import 'package:path/path.dart' as path;
 import 'package:epson_app/services/epson/scan_type.dart';
 
 import '../../env/env_constant.dart';
@@ -11,24 +11,49 @@ import '../../env/env_constant.dart';
 // 1. 관리자가 프린터를 등록하고 epson connect에 가입을 하면 이메일로 clientID, secterID를 받는다.
 // 2. 받은 키값들과 프린터 이메일로 subjectID, token을 받는다. (token은 60분 유효)
 
+enum DeviceName {
+  one,
+  two,
+  three;
+
+  String get name {
+    switch (this) {
+      case DeviceName.one:
+        return 'epson_tds@print.epsonconnect.com';
+      case DeviceName.two:
+        return 'epson_tds2@print.epsonconnect.com';
+      case DeviceName.three:
+        return 'epson_tds3@print.epsonconnect.com';
+    }
+  }
+}
+
 final class EpsonService {
-  static final _dio = DioService();
+  final _dio = DioService();
 
   // subjectID, token를 받아오기 위한 Env에서 받아오는 키값들 -> 추후 파이어베이스에서 받아온다.
-  static final String _host = Env.hostName;
-  static final String _clientId = Env.clientID;
-  static final String _secretId = Env.clientSecretID;
-  static const String _device = 'epson_tds2@print.epsonconnect.com';
+  final String _host = Env.hostName;
+  final String _clientId = Env.clientID;
+  final String _secretId = Env.clientSecretID;
+
+  String get host => _host;
+  String get clientId => _clientId;
+  String get secretId => _secretId;
+
+  final DeviceName printNm;
+  String get device => printNm.name;
+
+  EpsonService({required this.printNm});
 
   // 2번을 통해 받아오는 값들 -> 앱 시작시 파이어베이스에서 받아온 값들로 api통신 후 값 할당
-  static String _subjectId = '';
-  static String _accessToken = '';
+  String _subjectId = '';
+  String _accessToken = '';
 
   // 2번 api 통신후 받아온 값 여부
-  static bool get _isTokenAndDeviceIdExist =>
+  bool get _isTokenAndDeviceIdExist =>
       (_subjectId.isEmpty || _accessToken.isEmpty) ? false : true;
 
-  static Options get _commonHeader => Options(
+  Options get _commonHeader => Options(
         headers: {
           'Authorization': 'Bearer $_accessToken',
           'Content-Type': 'application/json;charset=utf-8',
@@ -36,7 +61,7 @@ final class EpsonService {
       );
 
   /// 2번 API 통신 (Authentication API)
-  static Future<void> createAuth() async {
+  Future<void> createAuth() async {
     // Header Auth
     final String auth = base64Encode(utf8.encode('$_clientId:$_secretId'));
 
@@ -51,7 +76,7 @@ final class EpsonService {
     // Parameter
     final Map<String, String> queryParams = {
       'grant_type': 'password',
-      'username': _device,
+      'username': device,
       'password': '',
     };
 
@@ -77,7 +102,7 @@ final class EpsonService {
   }
 
   /// Scan Method
-  static scanQueue() async {
+  scanQueue() async {
     if (!_isTokenAndDeviceIdExist) {
       log('Token 데이터가 없습니다.');
       return;
@@ -121,7 +146,7 @@ final class EpsonService {
   }
 
   /// 프린터 인쇄 작업
-  static Future<void> printQueue(String filePath) async {
+  Future<void> printQueue(String filePath) async {
     if (!_isTokenAndDeviceIdExist) {
       log('Token 데이터가 없습니다.');
       return;
@@ -152,7 +177,7 @@ final class EpsonService {
   }
 
   /// 프린터 정보 가져오기
-  static getDeviceInfo() async {
+  getDeviceInfo() async {
     try {
       final data = await _dio.get(
         header: _commonHeader,
@@ -165,7 +190,7 @@ final class EpsonService {
     }
   }
 
-  static Future<Response?> createPrintJob(Map<String, String> jobData) async {
+  Future<Response?> createPrintJob(Map<String, String> jobData) async {
     log('Create--------------------------------------------------------');
     try {
       final response = await _dio.post(
@@ -186,8 +211,7 @@ final class EpsonService {
     }
   }
 
-  static Future<Response?> uploadPrintFile(
-      String filePath, String baseUri) async {
+  Future<Response?> uploadPrintFile(String filePath, String baseUri) async {
     log('Upload--------------------------------------------------------');
     final file = File(filePath);
     if (!file.existsSync()) {
@@ -228,7 +252,7 @@ final class EpsonService {
     }
   }
 
-  static Future<Response?> executePrintJob(String jobId) async {
+  Future<Response?> executePrintJob(String jobId) async {
     log('Excute--------------------------------------------------------');
     try {
       final response = await _dio.post(

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:epson_app/pages/home/home_page.dart';
 import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 /// EpsonConnect 등록
 final class RegistPage extends StatelessWidget {
@@ -25,22 +27,29 @@ final class RegistPage extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              const Text('스캔 목록에 넣어보기'),
+              const Text('1'),
               TextButton(
-                  onPressed: () {
-                    EpsonService.scanQueue();
+                  onPressed: () async {
+                    final epson = EpsonService(printNm: DeviceName.one);
+                    await epson.createAuth();
+                    // await epson.getDeviceInfo();
+                    await epson.scanQueue();
                   },
                   child: const Text('동작')),
             ],
           ),
           Row(
             children: <Widget>[
-              const Text('출력 목록에 넣어보기'),
+              const Text('2'),
               TextButton(
                   onPressed: () async {
                     final file = await pickPdfFile();
                     if (file != null) {
-                      await EpsonService.printQueue(file.path);
+                      final epson = EpsonService(printNm: DeviceName.two);
+                      await epson.createAuth();
+                      await epson.getDeviceInfo();
+                      await epson.scanQueue();
+                      // await epson.printQueue(file.path);
                     }
                   },
                   child: const Text('동작')),
@@ -48,10 +57,13 @@ final class RegistPage extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              const Text('프린터 정보가져오기'),
+              const Text('3'),
               TextButton(
                   onPressed: () async {
-                    await EpsonService.getDeviceInfo();
+                    final epson = EpsonService(printNm: DeviceName.three);
+                    await epson.createAuth();
+                    await epson.getDeviceInfo();
+                    await epson.scanQueue();
                   },
                   child: const Text('동작')),
             ],
