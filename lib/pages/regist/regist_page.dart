@@ -33,7 +33,7 @@ final class RegistPage extends StatelessWidget {
                     final epson = EpsonService(printNm: DeviceName.one);
                     await epson.createAuth();
                     // await epson.getDeviceInfo();
-                    await epson.scanQueue();
+                    // await epson.scanQueue();
                   },
                   child: const Text('동작')),
             ],
@@ -45,10 +45,12 @@ final class RegistPage extends StatelessWidget {
                   onPressed: () async {
                     final file = await pickPdfFile();
                     if (file != null) {
-                      final epson = EpsonService(printNm: DeviceName.two);
+                      final epson = EpsonService(printNm: DeviceName.one);
                       await epson.createAuth();
-                      await epson.getDeviceInfo();
-                      await epson.scanQueue();
+                      await epson.printQueue(file.path);
+                      // await epson.createAuth();
+                      // await epson.getDeviceInfo();
+                      // await epson.scanQueue();
                       // await epson.printQueue(file.path);
                     }
                   },
@@ -61,9 +63,9 @@ final class RegistPage extends StatelessWidget {
               TextButton(
                   onPressed: () async {
                     final epson = EpsonService(printNm: DeviceName.three);
-                    await epson.createAuth();
-                    await epson.getDeviceInfo();
-                    await epson.scanQueue();
+                    // await epson.createAuth();
+                    // await epson.getDeviceInfo();
+                    // await epson.scanQueue();
                   },
                   child: const Text('동작')),
             ],
@@ -76,7 +78,20 @@ final class RegistPage extends StatelessWidget {
   Future<File?> pickPdfFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: [
+        'pdf',
+        'png',
+        'jpeg',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'ppt',
+        'pptx',
+        'bmp',
+        'gif',
+        'tiff'
+      ],
     );
 
     if (result != null && result.files.single.path != null) {

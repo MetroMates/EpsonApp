@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:epson_app/services/dio_service.dart';
 // import 'package:path/path.dart' as path;
 import 'package:epson_app/services/epson/scan_type.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../env/env_constant.dart';
 
@@ -59,6 +60,34 @@ final class EpsonService {
           'Content-Type': 'application/json;charset=utf-8',
         },
       );
+
+  Map<String, String> fileTypeMapping = {
+    'pdf': 'document',
+    'png': 'photo',
+    'jpeg': 'photo',
+    'doc': 'document',
+    'docx': 'document',
+    'xls': 'document',
+    'xlsx': 'document',
+    'ppt': 'document',
+    'pptx': 'document',
+    'bmp': 'photo',
+    'gif': 'photo',
+    'tiff': 'photo'
+  };
+
+  Map<String, String> mimeTypeMapping = {
+    'photo': 'image/jpeg',
+    'document': 'application/octet-stream'
+  };
+
+  // 파일 확장자로부터 타입을 반환하는 함수
+  (String, String) getFileType(String extension) {
+    String type = fileTypeMapping[extension] ?? 'document';
+    String mimeType = mimeTypeMapping[type] ?? 'application/octet-stream';
+
+    return (type, mimeType);
+  }
 
   /// 2번 API 통신 (Authentication API)
   Future<void> createAuth() async {
@@ -152,9 +181,19 @@ final class EpsonService {
       return;
     }
 
+    final file = File(filePath);
+    if (!file.existsSync()) {
+      log('No file found at path: $filePath');
+      return;
+    }
+
+    final fileName = file.uri.pathSegments.last.split('.').first;
+    final fileExtension =
+        file.uri.pathSegments.last.split('.').last.toLowerCase();
+
     final Map<String, String> jobData = {
-      'job_name': 'SampleJob1',
-      'print_mode': 'document',
+      'job_name': fileName,
+      'print_mode': getFileType(fileExtension).$1,
     };
 
     // 설정 작업
@@ -166,7 +205,7 @@ final class EpsonService {
     final String baseUri = jobBody['upload_uri'];
 
     // 파일 업로드 작업
-    final uploadResponse = await uploadPrintFile(filePath, baseUri);
+    final uploadResponse = await uploadPrintFile(file, baseUri);
     if (uploadResponse == null) return;
 
     // 인쇄 작업
@@ -211,15 +250,12 @@ final class EpsonService {
     }
   }
 
-  Future<Response?> uploadPrintFile(String filePath, String baseUri) async {
+  Future<Response?> uploadPrintFile(File file, String baseUri) async {
     log('Upload--------------------------------------------------------');
-    final file = File(filePath);
-    if (!file.existsSync()) {
-      log('No file found at path: $filePath');
-      return null;
-    }
+
     // final String fileName = file.path.split('/').last;
-    final String fileName = '1.${file.uri.pathSegments.last.split('.').last}';
+    final String fileName =
+        '1.${file.uri.pathSegments.last.split('.').last.toLowerCase()}';
     final String uploadUri = '$baseUri&File=$fileName';
 
     log('fileName : $fileName');
@@ -228,15 +264,15 @@ final class EpsonService {
 
     final Map<String, String> uploadHeaders = {
       'Content-Length': file.lengthSync().toString(),
-      'Content-Type': 'application/octet-stream',
+      'Content-Type':
+          getFileType(file.uri.pathSegments.last.split('.').last.toLowerCase())
+              .$2,
     };
-    FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(filePath, filename: fileName),
-    });
+
     try {
       final response = await _dio.post(
         uri: uploadUri,
-        parameter: formData,
+        parameter: file.openRead(),
         header: Options(headers: uploadHeaders),
       );
 
