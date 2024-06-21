@@ -1,6 +1,7 @@
 import 'package:epson_app/pages/admin/View/admin_login_page.dart';
 import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:epson_app/pages/setting/Controller/setting_viewmodel.dart';
+import 'package:epson_app/pages/user/View/user_login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -85,7 +86,9 @@ final class StartPage extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => const UserLoaginPage());
+                    },
                     child: Container(
                       width: 100,
                       height: 100,

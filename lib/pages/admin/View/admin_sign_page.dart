@@ -41,19 +41,7 @@ class AdminSignPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none,
                     ),
-                    suffixIcon: Obx(
-                      () {
-                        // suffixIcon을 관리하는 부분을 Obx로 감싸서 상태가 변경될 때마다 다시 그리도록 설정
-                        return Icon(
-                          adminSignViewModel.isEmailValid.value
-                              ? Icons.check
-                              : Icons.cancel,
-                          color: adminSignViewModel.isEmailValid.value
-                              ? Colors.green
-                              : Colors.red,
-                        );
-                      },
-                    ),
+                    suffixIcon: null,
                   ),
                 ),
               ),

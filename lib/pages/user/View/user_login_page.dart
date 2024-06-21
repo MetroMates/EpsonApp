@@ -1,14 +1,18 @@
+import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
+import 'package:epson_app/pages/user/View/user_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminLoginPage extends StatelessWidget {
-  const AdminLoginPage({super.key});
+class UserLoaginPage extends StatelessWidget {
+  const UserLoaginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserLoginViewModel userLoginViewModel =
+        Get.find<UserLoginViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('${'admin'.tr} ${'social_login'.tr}'),
+        title: Text('${'user'.tr} ${'social_login'.tr}'),
       ),
       body: Center(
         child: Padding(
@@ -31,8 +35,12 @@ class AdminLoginPage extends StatelessWidget {
                 color: const Color.fromARGB(255, 255, 230, 0),
                 icon: 'https://cdn-icons-png.flaticon.com/512/2111/2111466.png',
                 text: 'kakao_login'.tr,
-                onPressed: () {
-                  // 카카오 로그인 처리
+                onPressed: () async {
+                  // await userLoginViewModel.kakaoLogout();
+                  await userLoginViewModel.kakaoLogin();
+                  if (userLoginViewModel.user != null) {
+                    Get.to(() => const UserMainPage());
+                  }
                 },
                 textColor: Colors.black,
               ),

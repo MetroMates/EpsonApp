@@ -8,6 +8,7 @@ class MyTranslations extends Translations {
           'hello': 'Hello',
           'change_language': 'Change Language',
           'change_theme': 'Change Theme',
+          // 설정
           'admin': 'Admin',
           'user': 'User',
           'sign_up': 'Sign Up',
@@ -18,6 +19,13 @@ class MyTranslations extends Translations {
           'address': 'Address',
           'cofirm_password': 'Confirm Password',
           'create_account': 'Create Account',
+          // 회원가입
+          'login_message':
+              'Enjoy the benefits quickly and easily with social login. 🎉',
+          'kakao_login': 'Kakao Login',
+          'google_login': 'Google Login',
+          'social_login': 'Social Login',
+          // 로그인
         },
         'ko_KR': {
           'hello': '안녕하세요',
@@ -33,6 +41,10 @@ class MyTranslations extends Translations {
           'address': '주소',
           'cofirm_password': '비밀번호 확인',
           'create_account': '계정 생성',
+          'login_message': '쉽고 빠르게 소셜로그인으로 혜택을 마음껏 누려보세요. 🎉',
+          'kakao_login': '카카오 로그인',
+          'google_login': '구글 로그인',
+          'social_login': '소셜 로그인',
         },
         'ja_JP': {
           'hello': 'こんにちは',
@@ -48,6 +60,10 @@ class MyTranslations extends Translations {
           'address': '住所',
           'cofirm_password': 'パスワード確認',
           'create_account': 'アカウントの作成',
+          'login_message': '簡単かつ迅速にソーシャルログインで恩恵をお楽しみください。 🎉',
+          'kakao_login': 'Kakaoログイン',
+          'google_login': 'Googleログイン',
+          'social_login': 'ソーシャルログイン',
         },
       };
 }

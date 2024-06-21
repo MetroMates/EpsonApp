@@ -29,6 +29,7 @@ android {
     namespace "com.example.epson_app"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,11 +49,10 @@ android {
         applicationId "com.example.epson_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+       minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -68,6 +68,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-     implementation "com.android.support:multidex:2.0.1"
-}
+dependencies {}
