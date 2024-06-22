@@ -52,7 +52,13 @@ final class StorageService {
     } else if (T == List<String>) {
       return _pref.getStringList(key) as T?;
     } else {
-      throw UnsupportedError('Unsupported type');
+      return 'Not Exist' as T;
+      // throw UnsupportedError('Unsupported type');
     }
+  }
+
+  static Future<bool> remove({required String key}) async {
+    assert(key.isNotEmpty, 'Key는 빈값일 수 없습니다.');
+    return await _pref.remove(key);
   }
 }

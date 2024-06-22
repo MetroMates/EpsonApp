@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:epson_app/pages/home/home_page.dart';
+import 'package:epson_app/pages/common/setting_page.dart';
 import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

@@ -38,8 +38,8 @@ class UserLoaginPage extends StatelessWidget {
                 onPressed: () async {
                   // await userLoginViewModel.kakaoLogout();
                   await userLoginViewModel.kakaoLogin();
-                  if (userLoginViewModel.user != null) {
-                    Get.to(() => const UserMainPage());
+                  if (userLoginViewModel.isLogined) {
+                    Get.offAll(() => const UserMainPage());
                   }
                 },
                 textColor: Colors.black,

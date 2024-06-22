@@ -1,6 +1,6 @@
 import 'package:epson_app/pages/admin/View/admin_login_page.dart';
+import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
 import 'package:epson_app/pages/regist/regist_page.dart';
-import 'package:epson_app/pages/setting/Controller/setting_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -24,8 +24,14 @@ class MyTranslations extends Translations {
               'Enjoy the benefits quickly and easily with social login. 🎉',
           'kakao_login': 'Kakao Login',
           'google_login': 'Google Login',
-          'social_login': 'Social Login',
+          'social_login': 'Login',
           // 로그인
+          'usage_record': 'Usage record',
+          'setting': 'Setting',
+          'logout': 'Logout',
+          // drawer
+          'find_printer': 'Find a printer near you',
+          'recent_usage': 'Recent usage history',
         },
         'ko_KR': {
           'hello': '안녕하세요',
@@ -44,7 +50,12 @@ class MyTranslations extends Translations {
           'login_message': '쉽고 빠르게 소셜로그인으로 혜택을 마음껏 누려보세요. 🎉',
           'kakao_login': '카카오 로그인',
           'google_login': '구글 로그인',
-          'social_login': '소셜 로그인',
+          'social_login': '로그인',
+          'usage_record': '이용기록',
+          'setting': '설정',
+          'logout': '로그아웃',
+          'find_printer': '가까운 프린터기를 찾아보세요',
+          'recent_usage': '최근 이용내역을 알려드려요',
         },
         'ja_JP': {
           'hello': 'こんにちは',
@@ -63,7 +74,12 @@ class MyTranslations extends Translations {
           'login_message': '簡単かつ迅速にソーシャルログインで恩恵をお楽しみください。 🎉',
           'kakao_login': 'Kakaoログイン',
           'google_login': 'Googleログイン',
-          'social_login': 'ソーシャルログイン',
+          'social_login': 'ログイン',
+          'usage_record': '利用記録',
+          'setting': '設定',
+          'logout': 'ログアウト',
+          'find_printer': '周辺プリンタを探す',
+          'recent_usage': '最近の使用履歴',
         },
       };
 }
