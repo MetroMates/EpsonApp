@@ -31,7 +31,7 @@ class UserDrawerView extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: Text('setting'.tr),
               onTap: () {
-                Get.to(() => const SettingView());
+                Get.to(() => SettingView());
               },
             ),
             ListTile(

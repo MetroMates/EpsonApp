@@ -1,5 +1,5 @@
 import 'package:epson_app/services/firebase/firestore_service.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class AdminInfoViewModel extends GetxController {
   final _firebaseService = FireStoreService.shared;

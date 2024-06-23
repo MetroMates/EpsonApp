@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 /// EpsonConnect 등록
-final class RegistPage extends StatelessWidget {
-  const RegistPage({super.key});
+final class PrintRegistPage extends StatelessWidget {
+  const PrintRegistPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:epson_app/services/location_service.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class UserMapViewModel extends GetxController {

@@ -1,11 +1,11 @@
+import 'dart:developer';
+
 import 'package:epson_app/env/env_constant.dart';
-import 'package:epson_app/pages/admin/Controller/admin_sigin_viewmodel.dart';
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
-import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
 import 'package:epson_app/services/firebase/firebase_options.dart';
-import 'package:epson_app/services/socialLogin/kakao_login_service.dart';
 import 'package:epson_app/services/translation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +24,13 @@ Future<void> main() async {
   await NaverMapSdk.instance.initialize(
       clientId: Env.naverMapKey,
       onAuthFailed: (error) {
-        print('Auth failed: $error');
+        log('Auth failed: $error');
       });
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  GetxManager.init();
 
   runApp(const MyApp());
 }
@@ -39,7 +41,6 @@ final class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SettingViewModel settingViewModel = Get.put(SettingViewModel());
-    Get.put(AdminSignViewModel());
     Get.put(UserLoginViewModel());
     Get.put(UserMapViewModel());
     return GetMaterialApp(
@@ -49,7 +50,7 @@ final class MyApp extends StatelessWidget {
       theme: lightTheme(),
       darkTheme: darkTheme(),
       themeMode: settingViewModel.themeMode.value,
-      home: const StartPage(),
+      home: StartPage(),
     );
   }
 }

@@ -1,20 +1,17 @@
-import 'package:epson_app/pages/admin/View/admin_login_page.dart';
+import 'package:epson_app/getx_manager.dart';
+import 'package:epson_app/pages/admin/Views/login/admin_login_page.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
-import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:epson_app/pages/user/View/user_login_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 final class StartPage extends StatelessWidget {
-  const StartPage({super.key});
+  StartPage({super.key});
 
+  final SettingViewModel settingViewModel =
+      GetxManager.instance<SettingViewModel>();
   @override
   Widget build(BuildContext context) {
-    final SettingViewModel settingViewModel = Get.find<SettingViewModel>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Epson Printer Reservation'),
@@ -61,9 +58,7 @@ final class StartPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Get.to(() => const AdminLoginPage());
-                    },
+                    onTap: () => Get.to(const AdminLoginPage()),
                     child: Container(
                       width: 100,
                       height: 100,
@@ -87,7 +82,7 @@ final class StartPage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => const UserLoaginPage());
+                      Get.to(() => UserLoaginPage());
                     },
                     child: Container(
                       width: 100,

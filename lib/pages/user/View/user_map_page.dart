@@ -1,3 +1,4 @@
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -11,10 +12,11 @@ class NaverMapView extends StatefulWidget {
 }
 
 class _NaverMapViewState extends State<NaverMapView> {
+  final UserMapViewModel userMapViewModel =
+      GetxManager.instance<UserMapViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    final UserMapViewModel userMapViewModel = Get.find<UserMapViewModel>();
-
     // 최초에 setCenter() 호출
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userMapViewModel.setCenter();
