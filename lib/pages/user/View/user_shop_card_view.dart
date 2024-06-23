@@ -54,7 +54,7 @@ class UserShopCardVIew extends StatelessWidget {
             ],
           ),
           const Text(
-            '코코마트',
+            '3POP PC방',
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 26.0,

@@ -9,7 +9,7 @@ final class QRScannerView extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
-        Durations.extralong4,
+        const Duration(seconds: 2),
         () {
           Get.off(() => const PrintRegistPage());
         },

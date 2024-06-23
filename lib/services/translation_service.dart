@@ -35,8 +35,17 @@ class MyTranslations extends Translations {
           // main
           'map': 'Map',
           // map
+          'social_method': 'Social method',
+          'please_login': 'Login is required.',
           'my_info': 'My Info',
           'my_activity': 'My Activities',
+          'point': 'Point',
+          'benefits': 'Benefits',
+          'app_info': 'App Info',
+          'ver_info': 'Verseion Info',
+          'term_use': 'Terms of use',
+          'privacy_policy': 'Privacy policy',
+          'admin_transfer': 'Switch Administrator',
           // myInfo
           'home': 'Home',
         },
@@ -64,8 +73,17 @@ class MyTranslations extends Translations {
           'find_printer': '가까운 프린터기를 찾아보세요',
           'recent_usage': '최근 이용내역을 알려드려요',
           'map': '지도',
+          'please_login': '로그인이 필요합니다.',
           'my_info': '내 정보',
           'my_activity': '내 활동',
+          'social_method': '소셜 연동',
+          'point': '포인트',
+          'benefits': '혜택',
+          'app_info': '앱 정보',
+          'ver_info': '버전정보',
+          'term_use': '이용약관',
+          'privacy_policy': '개인정보처리방침',
+          'admin_transfer': '관리자 전환',
           'home': '홈'
         },
         'ja_JP': {
@@ -92,8 +110,17 @@ class MyTranslations extends Translations {
           'find_printer': '周辺プリンタを探す',
           'recent_usage': '最近の使用履歴',
           'map': '地図',
+          'social_method': 'ソーシャルメソッド',
+          'please_login': 'ログインが必要です。',
           'my_info': '私の情報',
           'my_activity': '私の活動',
+          'point': 'ポイント',
+          'benefits': '特典',
+          'app_info': 'アプリ情報',
+          'ver_info': 'バージョン情報',
+          'term_use': '利用規約',
+          'privacy_policy': '個人情報処理方針',
+          'admin_transfer': '管理者の切り替え',
           'home': 'ホーム'
         },
       };

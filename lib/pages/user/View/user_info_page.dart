@@ -46,7 +46,7 @@ class UserInfoPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   !userMapViewModel.isLogined.value
-                      ? '로그인이 필요합니다.'
+                      ? 'please_login'.tr
                       : '${userMapViewModel.userid.value}',
                   style: const TextStyle(fontSize: 20),
                 ),
@@ -71,26 +71,26 @@ class UserInfoPage extends StatelessWidget {
                         userMapViewModel.isLogined.value
                             ? Column(
                                 children: [
-                                  buildSectionTitle('내 활동'),
-                                  buildListTile('소셜연동', '카카오'),
-                                  buildListTile('이용내역',
+                                  buildSectionTitle('my_activity'.tr),
+                                  buildListTile('social_method'.tr, 'kakao'),
+                                  buildListTile('usage_record'.tr,
                                       const Icon(Icons.keyboard_arrow_right)),
-                                  buildListTile('관리자 전환',
+                                  buildListTile('admin_transfer'.tr,
                                       const Icon(Icons.compare_arrows)),
                                   buildSectionDivider(),
-                                  buildSectionTitle('혜택'),
-                                  buildListTile('포인트',
+                                  buildSectionTitle('benefits'.tr),
+                                  buildListTile('point'.tr,
                                       const Icon(Icons.keyboard_arrow_right)),
                                   buildSectionDivider(),
                                 ],
                               )
                             : const SizedBox(),
-                        buildSectionTitle('앱 정보'),
-                        buildListTile('버전정보', '1.0.0'),
-                        buildListTile(
-                            '이용약관', const Icon(Icons.keyboard_arrow_right)),
-                        buildListTile(
-                            '개인정보처리방침', const Icon(Icons.keyboard_arrow_right)),
+                        buildSectionTitle('app_info'.tr),
+                        buildListTile('ver_info'.tr, '1.0.0'),
+                        buildListTile('term_use'.tr,
+                            const Icon(Icons.keyboard_arrow_right)),
+                        buildListTile('privacy_policy'.tr,
+                            const Icon(Icons.keyboard_arrow_right)),
                       ],
                     ),
                   ),

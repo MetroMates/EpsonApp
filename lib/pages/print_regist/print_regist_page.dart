@@ -11,7 +11,7 @@ final class PrintRegistPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('코코마트'),
+        title: const Text('3POP PC방'),
         centerTitle: true,
       ),
       body: GridView.count(
