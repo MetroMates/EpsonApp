@@ -4,9 +4,7 @@ import 'package:epson_app/env/env_constant.dart';
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
-import 'package:epson_app/pages/user/Controller/user_main_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
-import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_tab_view.dart';
 import 'package:epson_app/services/firebase/firebase_options.dart';
 import 'package:epson_app/services/translation_service.dart';
@@ -32,29 +30,28 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  GetxManager.init();
+  GetxManager.create();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 final class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final userLoginViewModel = GetxManager.instance<UserLoginViewModel>();
+  final userMapViewModel = GetxManager.instance<UserMapViewModel>();
+  final settingViewModel = GetxManager.instance<SettingViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    final SettingViewModel settingViewModel = Get.put(SettingViewModel());
-    final UserMainViewModel userMainViewModel = Get.put(UserMainViewModel());
-    final UserMapViewModel userMapViewModel = Get.put(UserMapViewModel());
-    final UserLoginViewModel userLoginViewModel = Get.put(UserLoginViewModel());
-    Get.put(UserTabViewModel());
     userLoginViewModel.autoLogin();
     userMapViewModel.setCenter();
     return GetMaterialApp(
-      initialBinding: BindingsBuilder(() async {
-        Get.put(SettingViewModel());
-        Get.put(UserLoginViewModel());
-        Get.put(UserMainViewModel());
-      }),
+      // initialBinding: BindingsBuilder(() async {
+      //   Get.put(SettingViewModel());
+      //   Get.put(UserLoginViewModel());
+      //   Get.put(UserMainViewModel());
+      // }),
       translations: MyTranslations(),
       locale: Get.deviceLocale, // 기기 설정 언어로 초기화
       fallbackLocale: const Locale('en', 'US'), // 지원되지 않는 언어일 때 기본 언어

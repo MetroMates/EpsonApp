@@ -6,21 +6,25 @@ import 'package:epson_app/pages/admin/Views/print_info_list/print_info_viewmodel
 import 'package:epson_app/pages/admin/Views/sale_report/admin_sale_repot_viewmodel.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
+import 'package:epson_app/pages/user/Controller/user_main_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
+import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
 import 'package:get/get.dart';
 
 final class GetxManager {
-  static init() {
+  static create() {
     Get.put(AdminFormController());
     Get.put(AdminSaleReportViewModel());
+    Get.put(AdminScaffoldController());
 
-    Get.lazyPut(() => AdminScaffoldController());
     Get.lazyPut(() => PrintInfoViewModel());
     Get.lazyPut(() => AdminInfoViewModel());
     Get.lazyPut(() => AdminSignViewModel());
     Get.lazyPut(() => SettingViewModel());
     Get.lazyPut(() => UserLoginViewModel());
     Get.lazyPut(() => UserMapViewModel());
+    Get.lazyPut(() => UserMainViewModel());
+    Get.lazyPut(() => UserTabViewModel());
   }
 
   static T instance<T extends GetxController>() {

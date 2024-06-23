@@ -1,3 +1,4 @@
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/setting_page.dart';
 import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_info_page.dart';
@@ -14,9 +15,11 @@ class UserTabView extends StatelessWidget {
     UserInfoPage(),
     SettingView(),
   ];
+
+  final controller = GetxManager.instance<UserTabViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    final UserTabViewModel controller = Get.find<UserTabViewModel>();
     return Scaffold(
       body: Obx(() => _pages[controller.selectedIndex.value]),
       floatingActionButton: Padding(

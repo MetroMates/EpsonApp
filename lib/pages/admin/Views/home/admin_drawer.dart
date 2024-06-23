@@ -4,6 +4,9 @@ import 'package:epson_app/pages/admin/Views/develop_regist/admin_develop_regist_
 import 'package:epson_app/pages/admin/Views/print_regist/admin_print_regist_page.dart';
 import 'package:epson_app/pages/admin/Views/sale_report/admin_sale_report_page.dart';
 import 'package:epson_app/pages/admin/Views/settings/admin_setting_page.dart';
+import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
+import 'package:epson_app/pages/user/View/user_main_page.dart';
+import 'package:epson_app/pages/user/View/user_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +56,10 @@ final class AdminDrawer extends StatelessWidget {
                     title: '확인',
                     content: '사용자 모드로 전환하시겠습니까?',
                     onConfirm: () {
-                      // Get.offAll(page);
+                      GetxManager.instance<UserTabViewModel>()
+                          .selectedIndex
+                          .value = 0;
+                      Get.offAll(() => UserTabView());
                     });
               },
               leading: const Icon(

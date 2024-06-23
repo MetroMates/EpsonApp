@@ -1,3 +1,5 @@
+import 'package:epson_app/getx_manager.dart';
+import 'package:epson_app/pages/admin/Views/home/admin_home_page.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_login_page.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +8,16 @@ import 'package:get/get.dart';
 class UserInfoPage extends StatelessWidget {
   UserInfoPage({super.key});
 
-  final UserLoginViewModel userMapViewModel = Get.find<UserLoginViewModel>();
+  final UserLoginViewModel userMapViewModel =
+      GetxManager.instance<UserLoginViewModel>();
 
   Widget buildListTile(String title, dynamic trailing) {
     return ListTile(
       title: Text(title),
       trailing: trailing is Widget ? trailing : Text(trailing.toString()),
+      onTap: () {
+        Get.offAll(() => const AdminHomePage());
+      },
     );
   }
 
@@ -62,7 +68,7 @@ class UserInfoPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        userMapViewModel.isLogined.value
+                        !userMapViewModel.isLogined.value
                             ? Column(
                                 children: [
                                   buildSectionTitle('내 활동'),
