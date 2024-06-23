@@ -7,19 +7,16 @@ import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_main_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
-import 'package:epson_app/pages/user/View/user_main_page.dart';
 import 'package:epson_app/pages/user/View/user_tab_view.dart';
 import 'package:epson_app/services/firebase/firebase_options.dart';
 import 'package:epson_app/services/translation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import 'services/storage_service.dart';
-import 'start_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

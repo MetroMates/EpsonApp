@@ -1,6 +1,5 @@
 import 'package:epson_app/pages/common/setting_page.dart';
 import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
-import 'package:epson_app/pages/user/View/navar_map_view.dart';
 import 'package:epson_app/pages/user/View/user_info_page.dart';
 import 'package:epson_app/pages/user/View/user_main_page.dart';
 import 'package:epson_app/pages/user/View/user_map_page.dart';
@@ -13,7 +12,7 @@ class UserTabView extends StatelessWidget {
     const UserMainPage(),
     const UserMapPage(),
     UserInfoPage(),
-    const SettingView(),
+    SettingView(),
   ];
   @override
   Widget build(BuildContext context) {

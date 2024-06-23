@@ -47,7 +47,7 @@ class UserInfoPage extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     if (!userMapViewModel.isLogined.value) {
-                      Get.to(() => const UserLoaginPage());
+                      Get.to(() => UserLoaginPage());
                     } else {
                       userMapViewModel.kakaoLogout();
                     }

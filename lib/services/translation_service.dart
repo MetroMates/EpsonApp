@@ -62,13 +62,9 @@ class MyTranslations extends Translations {
           'logout': '로그아웃',
           'find_printer': '가까운 프린터기를 찾아보세요',
           'recent_usage': '최근 이용내역을 알려드려요',
-<<<<<<< HEAD
           'map': '지도',
           'my_info': '내 정보',
           'home': '홈'
-=======
-          'Printer Form': '프린터 정보 등록',
->>>>>>> feat/swj
         },
         'ja_JP': {
           'hello': 'こんにちは',
