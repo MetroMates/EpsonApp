@@ -1,5 +1,4 @@
-import 'package:epson_app/pages/user/View/user_drawer_view.dart';
-import 'package:epson_app/pages/user/View/user_map_page.dart';
+import 'package:epson_app/pages/user/View/navar_map_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +19,6 @@ class _UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const UserDrawerView(),
       appBar: AppBar(
         title: const Text('Epson Printer'),
       ),
@@ -31,7 +29,7 @@ class _UserMainPageState extends State<UserMainPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                color: Colors.blue,
+                color: const Color.fromARGB(255, 17, 76, 171),
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -52,8 +50,13 @@ class _UserMainPageState extends State<UserMainPage> {
               ),
             ),
             const Expanded(
-              flex: 3,
-              child: NaverMapView(),
+              flex: 5,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  child: NaverMapView(),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -66,6 +69,7 @@ class _UserMainPageState extends State<UserMainPage> {
               ),
             ),
             Expanded(
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ListView.builder(
@@ -82,6 +86,7 @@ class _UserMainPageState extends State<UserMainPage> {
                 ),
               ),
             ),
+            const Expanded(flex: 1, child: SizedBox())
           ],
         ),
       ),

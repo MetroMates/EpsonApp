@@ -1,4 +1,5 @@
 import 'package:epson_app/services/socialLogin/social_login.dart';
+import 'package:epson_app/services/storage_service.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -42,6 +43,7 @@ class KakaoLoginService implements SocialLogin {
   Future<bool> logout() async {
     try {
       await UserApi.instance.logout();
+      await StorageService.remove(key: 'id');
       return true;
     } catch (error) {
       return false;

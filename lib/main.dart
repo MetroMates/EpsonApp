@@ -3,12 +3,17 @@ import 'package:epson_app/pages/admin/Controller/admin_sigin_viewmodel.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
 import 'package:epson_app/pages/regist/regist_page.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
+import 'package:epson_app/pages/user/Controller/user_main_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
+import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
+import 'package:epson_app/pages/user/View/user_main_page.dart';
+import 'package:epson_app/pages/user/View/user_tab_view.dart';
 import 'package:epson_app/services/firebase/firebase_options.dart';
 import 'package:epson_app/services/socialLogin/kakao_login_service.dart';
 import 'package:epson_app/services/translation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -39,17 +44,25 @@ final class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SettingViewModel settingViewModel = Get.put(SettingViewModel());
-    Get.put(AdminSignViewModel());
-    Get.put(UserLoginViewModel());
-    Get.put(UserMapViewModel());
+    final UserMainViewModel userMainViewModel = Get.put(UserMainViewModel());
+    final UserMapViewModel userMapViewModel = Get.put(UserMapViewModel());
+    final UserLoginViewModel userLoginViewModel = Get.put(UserLoginViewModel());
+    Get.put(UserTabViewModel());
+    userLoginViewModel.autoLogin();
+    userMapViewModel.setCenter();
     return GetMaterialApp(
+      initialBinding: BindingsBuilder(() async {
+        Get.put(SettingViewModel());
+        Get.put(UserLoginViewModel());
+        Get.put(UserMainViewModel());
+      }),
       translations: MyTranslations(),
       locale: Get.deviceLocale, // 기기 설정 언어로 초기화
       fallbackLocale: const Locale('en', 'US'), // 지원되지 않는 언어일 때 기본 언어
       theme: lightTheme(),
       darkTheme: darkTheme(),
       themeMode: settingViewModel.themeMode.value,
-      home: const StartPage(),
+      home: UserTabView(),
     );
   }
 }

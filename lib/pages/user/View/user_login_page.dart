@@ -1,5 +1,6 @@
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_main_page.dart';
+import 'package:epson_app/pages/user/View/user_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,8 +39,8 @@ class UserLoaginPage extends StatelessWidget {
                 onPressed: () async {
                   // await userLoginViewModel.kakaoLogout();
                   await userLoginViewModel.kakaoLogin();
-                  if (userLoginViewModel.isLogined) {
-                    Get.offAll(() => const UserMainPage());
+                  if (userLoginViewModel.isLogined.value) {
+                    Get.offAll(() => UserTabView());
                   }
                 },
                 textColor: Colors.black,

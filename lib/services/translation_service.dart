@@ -32,6 +32,12 @@ class MyTranslations extends Translations {
           // drawer
           'find_printer': 'Find a printer near you',
           'recent_usage': 'Recent usage history',
+          // main
+          'map': 'Map',
+          // map
+          'my_info': 'My Info',
+          // myInfo
+          'home': 'Home',
         },
         'ko_KR': {
           'hello': '안녕하세요',
@@ -56,6 +62,9 @@ class MyTranslations extends Translations {
           'logout': '로그아웃',
           'find_printer': '가까운 프린터기를 찾아보세요',
           'recent_usage': '최근 이용내역을 알려드려요',
+          'map': '지도',
+          'my_info': '내 정보',
+          'home': '홈'
         },
         'ja_JP': {
           'hello': 'こんにちは',
@@ -80,6 +89,9 @@ class MyTranslations extends Translations {
           'logout': 'ログアウト',
           'find_printer': '周辺プリンタを探す',
           'recent_usage': '最近の使用履歴',
+          'map': '地図',
+          'my_info': '私の情報',
+          'home': 'ホーム'
         },
       };
 }

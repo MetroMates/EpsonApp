@@ -13,6 +13,7 @@ class UserMapViewModel extends GetxController {
 
   void setController({required NaverMapController controller}) {
     mapController = controller;
+    print('mapController init');
   }
 
   void setCenter() async {
@@ -20,6 +21,7 @@ class UserMapViewModel extends GetxController {
     if (locationPermissions.value == LocationPermissions.deniedForever) return;
     final position = await _locationService.getMyPosition();
     initialCenter.value = NLatLng(position.latitude, position.longitude);
+    print('setCenter');
   }
 
   // 네이버맵 마커 표시

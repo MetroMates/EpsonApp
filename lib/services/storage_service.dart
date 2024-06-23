@@ -52,7 +52,7 @@ final class StorageService {
     } else if (T == List<String>) {
       return _pref.getStringList(key) as T?;
     } else {
-      return 'Not Exist' as T;
+      return null;
       // throw UnsupportedError('Unsupported type');
     }
   }
