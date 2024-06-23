@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:epson_app/services/location_service.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
@@ -7,10 +10,12 @@ class UserMapViewModel extends GetxController {
   final LocationService _locationService = LocationService();
   NaverMapController? mapController;
   var initialCenter = Rx<NLatLng?>(null);
+  var isMarkerClicked = false.obs;
 
   void setController({required NaverMapController controller}) {
     mapController = controller;
     print('mapController init');
+    setMarkers();
   }
 
   void setCenter() async {
@@ -22,19 +27,28 @@ class UserMapViewModel extends GetxController {
   }
 
   // 네이버맵 마커 표시
-  // void setMarkers(NaverMapController controller) {
-  //   // 마커 생성 및 추가
-  //   final markers =
-  //       nearStations.map((station) => _createMarker(station)).toSet();
-  //   controller.addOverlayAll(markers);
+  void setMarkers() {
+    // 마커 생성 및 추가
+    final marker = NMarker(
+      // 말풍선에 역이름,라인 표시하기위해
+      id: '1',
+      position: const NLatLng(37.3665193, 127.1074454),
+    );
+    marker.setOnTapListener((NMarker marker) {
+      getShop();
+    });
+    mapController?.addOverlay(marker);
+  }
 
-  // }
+  void toggleMarker() {
+    isMarkerClicked.value = false;
+  }
 
-  // NMarker _createMarker() {
-  //   return NMarker(
-  //     // 말풍선에 역이름,라인 표시하기위해
-  //     id: '${station.statnId}/${station.statnNm}/${station.route}',
-  //     position: NLatLng(station.crdntY, station.crdntX),
-  //   );
-  // }
+  void getShop() async {
+    final epson = EpsonService(printNm: DeviceName.one);
+    await epson.createAuth();
+    final response = await epson.getDeviceInfo();
+    isMarkerClicked.value = true;
+    log(response?.data['printer_name'] ?? '');
+  }
 }

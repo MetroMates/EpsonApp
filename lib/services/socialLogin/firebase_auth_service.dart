@@ -17,7 +17,6 @@ class FirebaseAuthService {
   Future<void> _signIn(
       {required String email, required String password}) async {
     try {
-      StorageService.save(key: 'id', value: email);
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {

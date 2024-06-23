@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:epson_app/services/socialLogin/firebase_auth_service.dart';
 import 'package:epson_app/services/socialLogin/kakao_login_service.dart';
 import 'package:epson_app/services/storage_service.dart';
@@ -13,6 +15,7 @@ class UserLoginViewModel extends GetxController {
   // 자동 로그인
   Future<void> autoLogin() async {
     userid.value = await StorageService.read(key: 'id');
+    print('${userid.value}!!!!!!!!!!!!!');
     if (userid.value != null) {
       isLogined.value = true;
     }

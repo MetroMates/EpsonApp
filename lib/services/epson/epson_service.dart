@@ -216,16 +216,17 @@ final class EpsonService {
   }
 
   /// 프린터 정보 가져오기
-  getDeviceInfo() async {
+  Future<Response?> getDeviceInfo() async {
     try {
-      final data = await _dio.get(
+      final response = await _dio.get(
         header: _commonHeader,
-        endPoint: 'https://$_host/api/1/printing/printers/$_subjectId',
+        endPoint: '/api/1/printing/printers/$_subjectId',
       );
-      log(data.toString());
+      log(response.toString());
+      return response;
     } catch (e) {
       log('Faild get device: $e');
-      return;
+      return null;
     }
   }
 

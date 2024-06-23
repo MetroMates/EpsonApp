@@ -31,21 +31,28 @@ final class DioService {
   final _dio = Dio();
 
   // RestAPI get방식 통신
-  Future<dynamic> get({
+  Future<Response> get({
     Object? parameter,
     required Options header,
     required String endPoint,
   }) async {
     final String uri = 'https://$_host$endPoint';
+    try {
+      final Response response = await _dio.get(
+        uri,
+        data: parameter,
+        options: header,
+      );
 
-    final Response response = await _dio.get(
-      uri,
-      data: parameter,
-      options: header,
-    );
-
-    if (response.statusCode == HttpStatus.ok) {
-      return response.data;
+      if (response.statusCode == HttpStatus.ok) {
+        return response;
+      } else {
+        throw HttpException(
+            'Failed to post data, status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error during Get request: $e');
+      rethrow;
     }
   }
 
