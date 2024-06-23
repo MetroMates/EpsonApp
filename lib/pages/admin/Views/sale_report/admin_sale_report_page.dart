@@ -33,10 +33,10 @@ final class AdminSaleReportPage extends StatelessWidget {
             rows: viewModel.transactions.map(
               (data) {
                 return DataRow(cells: [
-                  DataCell(Text(data['usageDate'])),
-                  DataCell(Text(data['usageLocation'])),
-                  DataCell(Text(data['userId'])),
-                  DataCell(Text('${data['amount'].toStringAsFixed(2)}')),
+                  DataCell(Text(data['usageDate'].toString())),
+                  DataCell(Text(data['usageLocation'].toString())),
+                  DataCell(Text(data['userId'].toString())),
+                  DataCell(Text(data['amount'].toString())),
                 ]);
               },
             ).toList(),

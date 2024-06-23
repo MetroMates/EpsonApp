@@ -1,7 +1,6 @@
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/admin/Controller/admin_scaffold_controller.dart';
 import 'package:epson_app/pages/admin/Views/develop_regist/admin_develop_regist_page.dart';
-import 'package:epson_app/pages/admin/Views/print_info_list/admin_print_info_list.dart';
 import 'package:epson_app/pages/admin/Views/print_regist/admin_print_regist_page.dart';
 import 'package:epson_app/pages/admin/Views/sale_report/admin_sale_report_page.dart';
 import 'package:epson_app/pages/admin/Views/settings/admin_setting_page.dart';

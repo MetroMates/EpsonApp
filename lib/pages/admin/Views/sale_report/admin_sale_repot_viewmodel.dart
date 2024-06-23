@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 final class AdminSaleReportViewModel extends GetxController {
   // 임의의 데이터
-  List<Map<String, dynamic>> transactions = [
+  RxList<Map<String, Object>> transactions = [
     {
       'usageDate': '2024-06-23 10:30',
       'usageLocation': '서울시 강남구',
@@ -87,5 +87,5 @@ final class AdminSaleReportViewModel extends GetxController {
       'userId': 'user4567',
       'amount': 48000.0,
     },
-  ];
+  ].obs;
 }
