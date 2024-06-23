@@ -1,6 +1,7 @@
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/setting_page.dart';
 import 'package:epson_app/pages/user/Controller/user_tab_viewmodel.dart';
+import 'package:epson_app/pages/user/View/qr_scanner.dart';
 import 'package:epson_app/pages/user/View/user_info_page.dart';
 import 'package:epson_app/pages/user/View/user_main_page.dart';
 import 'package:epson_app/pages/user/View/user_map_page.dart';
@@ -29,6 +30,7 @@ class UserTabView extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 17, 76, 171),
           onPressed: () {
             // Handle center button action
+            Get.to(() => const QRScannerView());
           },
           child: const Icon(
             Icons.qr_code,
