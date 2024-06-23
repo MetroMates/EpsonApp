@@ -1,10 +1,7 @@
 import 'dart:io';
-
-import 'package:epson_app/pages/common/setting_page.dart';
 import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 /// EpsonConnect 등록
 final class PrintRegistPage extends StatelessWidget {
@@ -13,6 +10,10 @@ final class PrintRegistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Epson Service'),
+        centerTitle: true,
+      ),
       drawer: const Drawer(
         child: Column(
           children: [
