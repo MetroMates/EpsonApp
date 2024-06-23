@@ -1,3 +1,5 @@
+import 'package:epson_app/pages/admin/Views/home/admin_home_page.dart';
+import 'package:epson_app/pages/admin/Views/signup/admin_signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,6 +48,26 @@ class AdminLoginPage extends StatelessWidget {
                   // 구글 로그인 처리
                 },
                 textColor: Colors.black,
+              ),
+              const SizedBox(height: 20),
+              _buildSocialLoginButton(
+                context,
+                color: Colors.lightBlue.withOpacity(0.6),
+                icon:
+                    'https://cdn.pixabay.com/photo/2016/06/13/17/30/mail-1454731_1280.png',
+                text: '이메일 로그인'.tr,
+                onPressed: () => Get.offAll(const AdminHomePage()),
+                textColor: Colors.white,
+              ),
+              const SizedBox(height: 20),
+              InkWell(
+                onTap: () => Get.to(const AdminSignUpPage()),
+                child: const Text(
+                  '회원가입',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
               ),
             ],
           ),

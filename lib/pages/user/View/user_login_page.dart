@@ -1,3 +1,4 @@
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_main_page.dart';
 import 'package:epson_app/pages/user/View/user_tab_view.dart';
@@ -5,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserLoaginPage extends StatelessWidget {
-  const UserLoaginPage({super.key});
+  UserLoaginPage({super.key});
 
+  final UserLoginViewModel userLoginViewModel =
+      GetxManager.instance<UserLoginViewModel>();
   @override
   Widget build(BuildContext context) {
-    final UserLoginViewModel userLoginViewModel =
-        Get.find<UserLoginViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: Text('${'user'.tr} ${'social_login'.tr}'),

@@ -1,13 +1,15 @@
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingView extends StatelessWidget {
-  const SettingView({super.key});
+  SettingView({super.key});
 
+  final SettingViewModel settingViewModel =
+      GetxManager.instance<SettingViewModel>();
   @override
   Widget build(BuildContext context) {
-    final SettingViewModel settingViewModel = Get.find<SettingViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: Text('setting'.tr),

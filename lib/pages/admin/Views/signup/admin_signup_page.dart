@@ -1,14 +1,15 @@
+import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/admin/Controller/admin_sigin_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminSignPage extends StatelessWidget {
-  const AdminSignPage({super.key});
+final class AdminSignUpPage extends StatelessWidget {
+  const AdminSignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final AdminSignViewModel adminSignViewModel =
-        Get.find<AdminSignViewModel>();
+        GetxManager.instance<AdminSignViewModel>();
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -101,7 +102,10 @@ class AdminSignPage extends StatelessWidget {
                 ),
                 child: Text(
                   'sign_up'.tr,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
