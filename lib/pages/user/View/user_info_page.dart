@@ -59,8 +59,8 @@ class UserInfoPage extends StatelessWidget {
                     }
                   },
                   child: !userMapViewModel.isLogined.value
-                      ? const Text('로그인')
-                      : const Text('로그아웃'),
+                      ? Text('social_login'.tr)
+                      : Text('logout'.tr),
                 ),
                 Card(
                   child: Padding(
@@ -68,7 +68,7 @@ class UserInfoPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        !userMapViewModel.isLogined.value
+                        userMapViewModel.isLogined.value
                             ? Column(
                                 children: [
                                   buildSectionTitle('내 활동'),

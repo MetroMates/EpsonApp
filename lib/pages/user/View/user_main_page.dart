@@ -11,16 +11,16 @@ class UserMainPage extends StatefulWidget {
 
 class _UserMainPageState extends State<UserMainPage> {
   final List<Map<String, String>> infoCards = [
-    {'status': '반납가능', 'location': '2층 바르셀로', 'date': '2024.06.15 17:27'},
-    {'status': '대여점', 'location': '1층 드래곤와', 'date': '2024.06.15 17:24'},
-    {'status': '대여점', 'location': '6층 스텝커피', 'date': '2024.03.30 21:28'},
+    {'status': '인쇄가능', 'location': '3POP PC', 'date': '2024.06.15 17:27'},
+    {'status': '인쇄가능', 'location': '24시 프린트카페', 'date': '2024.06.15 17:24'},
+    {'status': '인쇄가능', 'location': '24시 프린트카페', 'date': '2024.03.30 21:28'},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Epson Printer'),
+        title: const Text('AirEpson'),
       ),
       body: SafeArea(
         child: Column(
@@ -33,7 +33,7 @@ class _UserMainPageState extends State<UserMainPage> {
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    '(서비스장애) 충전돼지 앱 지도 내 핀 표시 장애 안내',
+                    '(서비스장애) AirEpson 앱 지도 내 핀 표시 장애 안내',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -95,7 +95,7 @@ class _UserMainPageState extends State<UserMainPage> {
 
   Widget _buildInfoCard(String status, String location, String date) {
     return Card(
-      color: Colors.black,
+      color: const Color(0xFF3D4757),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

@@ -36,6 +36,7 @@ class MyTranslations extends Translations {
           'map': 'Map',
           // map
           'my_info': 'My Info',
+          'my_activity': 'My Activities',
           // myInfo
           'home': 'Home',
         },
@@ -64,6 +65,7 @@ class MyTranslations extends Translations {
           'recent_usage': '최근 이용내역을 알려드려요',
           'map': '지도',
           'my_info': '내 정보',
+          'my_activity': '내 활동',
           'home': '홈'
         },
         'ja_JP': {
@@ -91,6 +93,7 @@ class MyTranslations extends Translations {
           'recent_usage': '最近の使用履歴',
           'map': '地図',
           'my_info': '私の情報',
+          'my_activity': '私の活動',
           'home': 'ホーム'
         },
       };

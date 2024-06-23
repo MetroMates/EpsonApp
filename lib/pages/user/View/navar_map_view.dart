@@ -1,4 +1,5 @@
 import 'package:epson_app/getx_manager.dart';
+import 'package:epson_app/pages/print_regist/print_regist_page.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
 import 'package:epson_app/pages/user/View/user_shop_card_view.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,9 @@ class _NaverMapViewState extends State<NaverMapView> {
                 right: 0,
                 height: 200,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => const PrintRegistPage());
+                  },
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 3,

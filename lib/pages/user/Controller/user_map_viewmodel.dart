@@ -49,6 +49,6 @@ class UserMapViewModel extends GetxController {
     await epson.createAuth();
     final response = await epson.getDeviceInfo();
     isMarkerClicked.value = true;
-    log(response?.data['printer_name'] ?? '');
+    // log(response?.data['printer_name'] ?? '');
   }
 }

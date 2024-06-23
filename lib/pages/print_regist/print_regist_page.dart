@@ -13,61 +13,92 @@ final class PrintRegistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(
-        child: Column(
-          children: [
-            DrawerHeader(
-              child: Text('Epson Printer'),
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('코코마트'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: GridView.count(
+        crossAxisCount: 2, // Two items per row
         children: <Widget>[
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text('1'),
+              Image.network(
+                  fit: BoxFit.cover,
+                  'https://mediaserver.goepson.com/ImConvServlet/imconv/6e7b49a4f05650d689d137d9e162e28aa6e95b69/515Wx515H?use=productpictures&hybrisId=B2C&assetDescr=b10_Business_Large_All_in_one'), // Replace with actual image URL
+              const Text('1번 프린터'),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               TextButton(
-                  onPressed: () async {
+                onPressed: () async {
+                  final file = await pickPdfFile();
+                  if (file != null) {
                     final epson = EpsonService(printNm: DeviceName.one);
                     await epson.createAuth();
-                    // await epson.getDeviceInfo();
-                    // await epson.scanQueue();
-                  },
-                  child: const Text('동작')),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              const Text('2'),
-              TextButton(
-                  onPressed: () async {
-                    final file = await pickPdfFile();
-                    if (file != null) {
-                      final epson = EpsonService(printNm: DeviceName.one);
-                      await epson.createAuth();
-                      await epson.printQueue(file.path);
-                      // await epson.createAuth();
-                      // await epson.getDeviceInfo();
-                      // await epson.scanQueue();
-                      // await epson.printQueue(file.path);
-                    }
-                  },
-                  child: const Text('동작')),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              const Text('3'),
-              TextButton(
-                  onPressed: () async {
-                    final epson = EpsonService(printNm: DeviceName.three);
+                    await epson.printQueue(file.path);
                     // await epson.createAuth();
                     // await epson.getDeviceInfo();
                     // await epson.scanQueue();
-                  },
-                  child: const Text('동작')),
+                    // await epson.printQueue(file.path);
+                  }
+                },
+                child: const Text('인쇄'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final epson = EpsonService(printNm: DeviceName.one);
+                  await epson.createAuth();
+                  // await epson.printQueue(file.path);
+                  // await epson.createAuth();
+                  // await epson.getDeviceInfo();
+                  await epson.scanQueue();
+                  // await epson.printQueue(file.path);
+                },
+                child: const Text('스캔'),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.network(
+                  fit: BoxFit.cover,
+                  'https://mediaserver.goepson.com/ImConvServlet/imconv/0619af7cee83d401607612732bbefbf806d55a96/1200Wx1200H?use=banner&hybrisId=B2C&assetDescr=EKL_L6460_690_460_normal'), // Replace with actual image URL
+              const Text('2번 프린터'),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  final file = await pickPdfFile();
+                  if (file != null) {
+                    final epson = EpsonService(printNm: DeviceName.one);
+                    await epson.createAuth();
+                    await epson.printQueue(file.path);
+                    // await epson.createAuth();
+                    // await epson.getDeviceInfo();
+                    // await epson.scanQueue();
+                    // await epson.printQueue(file.path);
+                  }
+                },
+                child: const Text('인쇄'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final epson = EpsonService(printNm: DeviceName.one);
+                  await epson.createAuth();
+                  // await epson.printQueue(file.path);
+                  // await epson.createAuth();
+                  // await epson.getDeviceInfo();
+                  await epson.scanQueue();
+                  // await epson.printQueue(file.path);
+                },
+                child: const Text('스캔'),
+              ),
             ],
           ),
         ],
