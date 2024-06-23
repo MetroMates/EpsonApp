@@ -17,7 +17,7 @@ final class AdminHomePage extends StatelessWidget {
       body: SafeArea(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: const AdminPrintInfoList(),
+          child: AdminPrintInfoList(),
         ),
       ),
     );

@@ -1,12 +1,10 @@
 import 'package:epson_app/getx_manager.dart';
-import 'package:epson_app/pages/admin/Controller/admin_form_controller.dart';
+import 'package:epson_app/pages/admin/Controller/admin_info_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 final class AdminDevelopRegistPage extends StatefulWidget {
-  AdminDevelopRegistPage({super.key});
-
-  final formController = GetxManager.instance<AdminFormController>();
+  const AdminDevelopRegistPage({super.key});
 
   @override
   State<AdminDevelopRegistPage> createState() => _AdminDevelopRegistPageState();
@@ -14,6 +12,8 @@ final class AdminDevelopRegistPage extends StatefulWidget {
 
 class _AdminDevelopRegistPageState extends State<AdminDevelopRegistPage> {
   final _formKey = GlobalKey<FormState>();
+
+  final viewModel = GetxManager.instance<AdminInfoViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,7 @@ class _AdminDevelopRegistPageState extends State<AdminDevelopRegistPage> {
             children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(labelText: 'SecrectKey'),
-                onChanged: (value) =>
-                    widget.formController.secretKey.value = value,
+                onChanged: (value) => viewModel.secretKey.value = value,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter SecretKey';
@@ -40,8 +39,7 @@ class _AdminDevelopRegistPageState extends State<AdminDevelopRegistPage> {
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'ClientKey'),
-                onChanged: (value) =>
-                    widget.formController.clientKey.value = value,
+                onChanged: (value) => viewModel.clientKey.value = value,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter ClientKey';
@@ -52,8 +50,7 @@ class _AdminDevelopRegistPageState extends State<AdminDevelopRegistPage> {
               TextFormField(
                 decoration: const InputDecoration(labelText: 'HostName'),
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) =>
-                    widget.formController.hostName.value = value,
+                onChanged: (value) => viewModel.hostName.value = value,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter an HostName';
@@ -63,8 +60,7 @@ class _AdminDevelopRegistPageState extends State<AdminDevelopRegistPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () async =>
-                    widget.formController.submitData(formKey: _formKey),
+                onPressed: () async => viewModel.submitData(formKey: _formKey),
                 child: Text('Submit'.tr),
               ),
             ],

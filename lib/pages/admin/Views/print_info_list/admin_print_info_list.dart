@@ -1,33 +1,48 @@
+import 'package:epson_app/getx_manager.dart';
+import 'package:epson_app/pages/admin/Controller/print_info_viewmodel.dart';
+import 'package:epson_app/pages/admin/Model/print_info.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 final class AdminPrintInfoList extends StatelessWidget {
-  const AdminPrintInfoList({super.key});
+  AdminPrintInfoList({super.key});
+
+  final viewModel = GetxManager.instance<PrintInfoViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      itemCount: 20,
-      itemBuilder: (_, index) {
-        return const PrintInfoCell();
+    return Obx(
+      () {
+        viewModel.fetchPrintInfos();
+        return ListView.builder(
+          physics: const ClampingScrollPhysics(),
+          itemCount: viewModel.printInfos.length,
+          itemBuilder: (_, index) {
+            final data = viewModel.printInfos[index];
+
+            return PrintInfoCell(data: data);
+          },
+        );
       },
     );
   }
 }
 
 final class PrintInfoCell extends StatelessWidget {
-  const PrintInfoCell({super.key});
+  const PrintInfoCell({super.key, required this.data});
+
+  final PrintInfo data;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('프린터 이름'),
+      title: Text(data.printAlias),
       style: ListTileStyle.drawer,
-      subtitle: const Row(
+      subtitle: Row(
         children: <Widget>[
-          Text('위치'),
-          SizedBox(width: 10),
-          Text('경기도 수원시 단원구'),
+          const Text('위치'),
+          const SizedBox(width: 10),
+          Text(data.address),
         ],
       ),
       trailing: InkWell(

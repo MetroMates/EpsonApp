@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
 
 abstract class FireStoreObject {}
 
@@ -13,7 +12,7 @@ final class FireStoreService {
   factory FireStoreService() => shared;
 
   /// db
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<T?> read<T extends FireStoreObject>({
     required String col,
@@ -21,7 +20,7 @@ final class FireStoreService {
     required T Function(Map<String, dynamic>? decodeData) fromJson,
   }) async {
     try {
-      final docRef = db.collection(col).doc(docID);
+      final docRef = _db.collection(col).doc(docID);
       final docData = await docRef.get();
 
       return fromJson(docData.data());
@@ -35,7 +34,7 @@ final class FireStoreService {
     required String docID,
   }) async {
     try {
-      final docRef = db.collection(col).doc(docID);
+      final docRef = _db.collection(col).doc(docID);
       final docData = await docRef.get();
 
       return docData.data();
@@ -49,7 +48,7 @@ final class FireStoreService {
     required T Function(Map<String, dynamic> decodeData) fromJson,
   }) async {
     try {
-      final colRef = db.collection(col);
+      final colRef = _db.collection(col);
       final datas = await colRef.get();
 
       List<T> rtnDatas = [];
@@ -61,6 +60,42 @@ final class FireStoreService {
       return rtnDatas;
     } catch (e) {
       return [];
+    }
+  }
+
+  void insert({
+    required String col,
+    String? docID,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      final DocumentReference<Map<String, dynamic>> docRef;
+      if (docID == null) {
+        docRef = _db.collection(col).doc();
+      } else {
+        docRef = _db.collection(col).doc(docID);
+      }
+
+      await docRef.set(data);
+      log("DocumentSnapshot successfully Insert!");
+    } catch (e) {
+      log("Error Inserting document $e");
+      rethrow;
+    }
+  }
+
+  void update({
+    required String col,
+    required String docID,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      final docRef = _db.collection(col).doc(docID);
+      await docRef.update(data);
+      log("DocumentSnapshot successfully updated!");
+    } catch (e) {
+      log("Error updating document $e");
+      rethrow;
     }
   }
 }

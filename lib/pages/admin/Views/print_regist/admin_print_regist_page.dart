@@ -1,5 +1,5 @@
 import 'package:epson_app/getx_manager.dart';
-import 'package:epson_app/pages/admin/Controller/admin_form_controller.dart';
+import 'package:epson_app/pages/admin/Controller/print_info_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +11,7 @@ final class AdminPrintRegistPage extends StatefulWidget {
 
 class _AdminPrintRegistPageState extends State<AdminPrintRegistPage> {
   final _formKey = GlobalKey<FormState>();
-  final formController = GetxManager.instance<AdminFormController>();
+  final formController = GetxManager.instance<PrintInfoViewModel>();
 
   @override
   Widget build(BuildContext context) {
