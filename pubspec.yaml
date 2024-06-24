@@ -36,7 +36,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   get: ^4.6.6
-
+  dio: ^5.4.3+1
+  shared_preferences: ^2.2.3
+  file_picker: ^8.0.5
+  firebase_core: ^3.1.0
+  firebase_auth: ^5.1.0
+  cloud_firestore: ^5.0.1
+  kakao_flutter_sdk_user: ^1.9.3
+  fluttertoast: ^8.2.6
+  flutter_naver_map: ^1.2.2
+  geolocator: ^11.0.0
+  json_annotation: ^4.9.0
+  encrypt: ^5.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,6 +58,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
