@@ -32,7 +32,7 @@ class UserMapViewModel extends GetxController {
     final marker = NMarker(
       // 말풍선에 역이름,라인 표시하기위해
       id: '1',
-      position: const NLatLng(37.3665193, 127.1074454),
+      position: initialCenter.value ?? const NLatLng(37.26939, 127.0193),
     );
     marker.setOnTapListener((NMarker marker) {
       getShop();
