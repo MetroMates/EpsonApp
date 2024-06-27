@@ -1,5 +1,5 @@
 import 'package:epson_app/getx_manager.dart';
-import 'package:epson_app/pages/admin/Views/sale_report/admin_sale_repot_viewmodel.dart';
+import 'package:epson_app/pages/admin/Views/%08sale/admin_sale_repot_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 final class AdminSaleReportPage extends StatelessWidget {

@@ -43,6 +43,42 @@ final class FireStoreService {
     }
   }
 
+  Future<bool> checkIfFieldValueExists(
+      String col, String fieldName, String value) async {
+    try {
+      QuerySnapshot query =
+          await _db.collection(col).where(fieldName, isEqualTo: value).get();
+
+      if (query.docs.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error checking if field value exists: $e');
+      return false;
+    }
+  }
+
+  Future<bool> checkIfDocumentExists(
+      String collection, String documentID) async {
+    try {
+      DocumentSnapshot documentSnapshot = await _db
+          .collection(collection)
+          .doc(documentID)
+          .get(); // documentID로 문서 조회
+
+      if (documentSnapshot.exists) {
+        return true; // 문서가 존재하면 true 반환
+      } else {
+        return false; // 문서가 존재하지 않으면 false 반환
+      }
+    } catch (e) {
+      print('Error checking if document exists: $e');
+      return false;
+    }
+  }
+
   Future<List<T>> reads<T extends FireStoreObject>({
     required String col,
     required T Function(Map<String, dynamic> decodeData) fromJson,
@@ -61,6 +97,13 @@ final class FireStoreService {
     } catch (e) {
       return [];
     }
+  }
+
+  void insertAll({
+    required String col,
+    required Map<String, dynamic> data,
+  }) async {
+    await _db.collection(col).add(data);
   }
 
   void insert({

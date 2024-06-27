@@ -1,15 +1,15 @@
-import 'package:epson_app/pages/user/View/navar_map_view.dart';
+import 'package:epson_app/pages/user/View/map/navar_map_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserMainPage extends StatefulWidget {
-  const UserMainPage({super.key});
+class UserHomePage extends StatefulWidget {
+  const UserHomePage({super.key});
 
   @override
-  State<UserMainPage> createState() => _UserMainPageState();
+  State<UserHomePage> createState() => _UserHomePageState();
 }
 
-class _UserMainPageState extends State<UserMainPage> {
+class _UserHomePageState extends State<UserHomePage> {
   final List<Map<String, String>> infoCards = [
     {'status': '인쇄가능', 'location': '3POP PC', 'date': '2024.06.15 17:27'},
     {'status': '인쇄가능', 'location': '24시 프린트카페', 'date': '2024.06.15 17:24'},

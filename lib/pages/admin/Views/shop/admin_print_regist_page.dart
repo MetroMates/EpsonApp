@@ -1,7 +1,10 @@
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/admin/Controller/print_info_viewmodel.dart';
+import 'package:epson_app/pages/user/View/map/navar_map_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 final class AdminPrintRegistPage extends StatefulWidget {
   const AdminPrintRegistPage({super.key});
@@ -81,6 +84,37 @@ class _AdminPrintRegistPageState extends State<AdminPrintRegistPage> {
                   }
                   return null;
                 },
+              ),
+              TextFormField(
+                controller: formController.postcodeController,
+                decoration: const InputDecoration(
+                  hintText: '우편번호',
+                ),
+                readOnly: true,
+              ),
+              TextFormField(
+                controller: formController.addressController,
+                decoration: const InputDecoration(
+                  hintText: '기본주소',
+                ),
+                readOnly: true,
+              ),
+              TextFormField(
+                textInputAction: TextInputAction.done,
+                controller: formController.addressDetailController,
+                decoration: const InputDecoration(
+                  hintText: '상세주소 입력',
+                ),
+              ),
+              CupertinoButton(
+                onPressed: () {
+                  formController.searchAddress(context);
+                },
+                child: const Text('주소검색'),
+              ),
+              const SizedBox(
+                height: 250,
+                child: NaverMapView(),
               ),
               const SizedBox(height: 20),
               ElevatedButton(

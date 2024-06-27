@@ -131,3 +131,251 @@ final class PrintRegistPage extends StatelessWidget {
     }
   }
 }
+
+class DetailPage extends StatelessWidget {
+  const DetailPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('프린터 이용하기'),
+      ),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeaderSection(),
+            SizedBox(height: 16),
+            StatusSection(),
+            SizedBox(height: 16),
+            InfoSection(),
+            SizedBox(height: 16),
+            ButtonSection(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HeaderSection extends StatelessWidget {
+  const HeaderSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          '세븐일레븐 - 인계베스트점',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        const SizedBox(height: 8),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SlotInfo(title: '이용가능', count: 2),
+            SizedBox(width: 32),
+            SlotInfo(title: '이용불가', count: 1),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class SlotInfo extends StatelessWidget {
+  final String title;
+  final int count;
+
+  const SlotInfo({super.key, required this.title, required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(color: Colors.grey),
+        ),
+        Text(
+          '$count',
+          style: const TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue),
+        ),
+      ],
+    );
+  }
+}
+
+class StatusSection extends StatelessWidget {
+  const StatusSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          StatusRow(
+            label: '기기상태',
+            value: 'ON',
+            valueColor: Colors.green,
+          ),
+          StatusRow(
+            label: '세부위치',
+            value: '취식대 위',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StatusRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color? valueColor;
+
+  const StatusRow(
+      {super.key, required this.label, required this.value, this.valueColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        children: [
+          Text(label, style: const TextStyle(color: Colors.grey)),
+          const Spacer(),
+          Text(value,
+              style: TextStyle(
+                  color: valueColor ?? Colors.black,
+                  fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoSection extends StatelessWidget {
+  const InfoSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InfoRow(icon: Icons.phone, label: '매장전화', value: '-'),
+          InfoRow(
+              icon: Icons.monetization_on,
+              label: '요금정보',
+              value: '1시간당 / 1,100원'),
+          InfoRow(
+              icon: Icons.access_time, label: '운영시간', value: '00:00 - 24:00'),
+          InfoRow(
+              icon: Icons.web, label: '웹주소', value: 'm.7-eleven.co.kr:444/'),
+          InfoRow(icon: Icons.info, label: '기타안내', value: ''),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const InfoRow(
+      {super.key,
+      required this.icon,
+      required this.label,
+      required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.grey),
+          const SizedBox(width: 8),
+          Text(label),
+          const Spacer(),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+}
+
+class ButtonSection extends StatelessWidget {
+  const ButtonSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text('QR 스캔'),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text('길 찾기'),
+          ),
+        ),
+      ],
+    );
+  }
+}

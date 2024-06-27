@@ -6,6 +6,7 @@ import 'package:epson_app/pages/admin/Model/print_info.dart';
 import 'package:epson_app/services/firebase/firestore_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:remedi_kopo/remedi_kopo.dart';
 
 final class PrintInfoViewModel extends GetxController {
   late PrintInfo printInfo;
@@ -25,6 +26,29 @@ final class PrintInfoViewModel extends GetxController {
 
   /// 프린터기 위치 (주소)
   Rx<String> address = ''.obs;
+
+  final TextEditingController postcodeController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController addressDetailController = TextEditingController();
+
+  void searchAddress(BuildContext context) async {
+    KopoModel? kopoModel = await Get.to(() => RemediKopo());
+
+    final postcode = kopoModel?.zonecode ?? '';
+    postcodeController.value = TextEditingValue(
+      text: postcode,
+    );
+
+    final address = kopoModel?.address ?? '';
+    addressController.value = TextEditingValue(
+      text: address,
+    );
+
+    final buildingName = kopoModel?.buildingName ?? '';
+    addressDetailController.value = TextEditingValue(
+      text: buildingName,
+    );
+  }
 
   void fetchPrintInfos() async {
     try {

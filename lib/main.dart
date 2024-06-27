@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:epson_app/env/env_constant.dart';
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/common/controllers/setting_viewmodel.dart';
-import 'package:epson_app/pages/user/Controller/user_login_viewmodel.dart';
+import 'package:epson_app/pages/common/controllers/login_viewmodel.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
-import 'package:epson_app/pages/user/View/user_tab_view.dart';
+import 'package:epson_app/pages/common/views/tab_view.dart';
 import 'package:epson_app/services/firebase/firebase_options.dart';
 import 'package:epson_app/services/translation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +38,7 @@ Future<void> main() async {
 final class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final userLoginViewModel = GetxManager.instance<UserLoginViewModel>();
+  final userLoginViewModel = GetxManager.instance<LoginViewModel>();
   final userMapViewModel = GetxManager.instance<UserMapViewModel>();
   final settingViewModel = GetxManager.instance<SettingViewModel>();
 
@@ -48,9 +48,7 @@ final class MyApp extends StatelessWidget {
     userMapViewModel.setCenter();
     return GetMaterialApp(
       // initialBinding: BindingsBuilder(() async {
-      //   Get.put(SettingViewModel());
-      //   Get.put(UserLoginViewModel());
-      //   Get.put(UserMainViewModel());
+      //   Get.put(AdminInfoViewModel());
       // }),
       translations: MyTranslations(),
       locale: Get.deviceLocale, // 기기 설정 언어로 초기화
@@ -58,7 +56,7 @@ final class MyApp extends StatelessWidget {
       theme: lightTheme(),
       darkTheme: darkTheme(),
       themeMode: settingViewModel.themeMode.value,
-      home: UserTabView(),
+      home: TabView(),
     );
   }
 }

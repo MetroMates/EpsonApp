@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:epson_app/services/epson/epson_service.dart';
 import 'package:epson_app/services/location_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,8 @@ class UserMapViewModel extends GetxController {
   NaverMapController? mapController;
   var initialCenter = Rx<NLatLng?>(null);
   var isMarkerClicked = false.obs;
+  final pageController = PageController();
+  Rx<int> selectedPage = 0.obs;
 
   void setController({required NaverMapController controller}) {
     mapController = controller;
@@ -41,13 +44,15 @@ class UserMapViewModel extends GetxController {
   }
 
   void toggleMarker() {
+    print('toggleMarker');
     isMarkerClicked.value = false;
   }
 
   void getShop() async {
-    final epson = EpsonService(printNm: DeviceName.one);
-    await epson.createAuth();
-    final response = await epson.getDeviceInfo();
+    // final epson = EpsonService(printNm: DeviceName.one);
+    // await epson.createAuth();
+    // final response = await epson.getDeviceInfo();
+
     isMarkerClicked.value = true;
     // log(response?.data['printer_name'] ?? '');
   }

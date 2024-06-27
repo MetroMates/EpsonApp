@@ -1,4 +1,4 @@
-import 'package:epson_app/pages/user/View/navar_map_view.dart';
+import 'package:epson_app/pages/user/View/map/navar_map_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

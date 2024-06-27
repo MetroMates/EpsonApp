@@ -48,6 +48,9 @@ dependencies:
   geolocator: ^11.0.0
   json_annotation: ^4.9.0
   encrypt: ^5.0.3
+  remedi_kopo: ^0.0.2
+  url_launcher: ^6.3.0
+  page_view_dot_indicator: ^2.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

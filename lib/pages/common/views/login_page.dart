@@ -1,16 +1,19 @@
-import 'package:epson_app/pages/admin/Views/home/admin_home_page.dart';
-import 'package:epson_app/pages/admin/Views/signup/admin_signup_page.dart';
+import 'package:epson_app/getx_manager.dart';
+import 'package:epson_app/pages/common/controllers/login_viewmodel.dart';
+import 'package:epson_app/pages/user/View/home/user_home_page.dart';
+import 'package:epson_app/pages/common/views/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminLoginPage extends StatelessWidget {
-  const AdminLoginPage({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
 
+  final LoginViewModel loginViewModel = GetxManager.instance<LoginViewModel>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${'admin'.tr} ${'social_login'.tr}'),
+        title: Text('social_login'.tr),
       ),
       body: Center(
         child: Padding(
@@ -33,8 +36,12 @@ class AdminLoginPage extends StatelessWidget {
                 color: const Color.fromARGB(255, 255, 230, 0),
                 icon: 'https://cdn-icons-png.flaticon.com/512/2111/2111466.png',
                 text: 'kakao_login'.tr,
-                onPressed: () {
-                  // 카카오 로그인 처리
+                onPressed: () async {
+                  // await LoginViewModel.kakaoLogout();
+                  await loginViewModel.kakaoLogin();
+                  if (loginViewModel.isLogined.value) {
+                    Get.offAll(() => TabView());
+                  }
                 },
                 textColor: Colors.black,
               ),
@@ -48,26 +55,6 @@ class AdminLoginPage extends StatelessWidget {
                   // 구글 로그인 처리
                 },
                 textColor: Colors.black,
-              ),
-              const SizedBox(height: 20),
-              _buildSocialLoginButton(
-                context,
-                color: Colors.lightBlue.withOpacity(0.6),
-                icon:
-                    'https://cdn.pixabay.com/photo/2016/06/13/17/30/mail-1454731_1280.png',
-                text: '이메일 로그인'.tr,
-                onPressed: () => Get.offAll(const AdminHomePage()),
-                textColor: Colors.white,
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: () => Get.to(const AdminSignUpPage()),
-                child: const Text(
-                  '회원가입',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
               ),
             ],
           ),

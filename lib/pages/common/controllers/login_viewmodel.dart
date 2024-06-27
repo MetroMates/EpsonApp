@@ -1,21 +1,21 @@
 import 'dart:math';
 
+import 'package:epson_app/services/firebase/firestore_service.dart';
 import 'package:epson_app/services/socialLogin/firebase_auth_service.dart';
 import 'package:epson_app/services/socialLogin/kakao_login_service.dart';
 import 'package:epson_app/services/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-class UserLoginViewModel extends GetxController {
+class LoginViewModel extends GetxController {
   User? _user;
-  final userid = Rx<Object?>(null);
+  var userid = Rx<String?>(null);
   KakaoLoginService kakaoLoginService = KakaoLoginService();
   Rx<bool> isLogined = false.obs;
 
   // 자동 로그인
   Future<void> autoLogin() async {
-    userid.value = await StorageService.read(key: 'id');
-    print('${userid.value}!!!!!!!!!!!!!');
+    userid.value = await StorageService.read<String>(key: 'id');
     if (userid.value != null) {
       isLogined.value = true;
     }
@@ -30,7 +30,8 @@ class UserLoginViewModel extends GetxController {
         userid.value = _user?.kakaoAccount?.email ?? '';
         await FirebaseAuthService().signup(
             email: _user?.kakaoAccount?.email ?? '',
-            password: _user?.id.toString() ?? '');
+            password: _user?.id.toString() ?? '',
+            nickname: _user?.kakaoAccount?.profile?.nickname ?? '');
         await StorageService.save(
             key: 'id', value: _user?.kakaoAccount?.email ?? '');
         print(_user?.kakaoAccount?.email);

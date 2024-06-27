@@ -1,7 +1,7 @@
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/print_regist/print_regist_page.dart';
 import 'package:epson_app/pages/user/Controller/user_map_viewmodel.dart';
-import 'package:epson_app/pages/user/View/user_shop_card_view.dart';
+import 'package:epson_app/pages/user/View/map/user_shop_card_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:get/get.dart';
@@ -21,6 +21,7 @@ class _NaverMapViewState extends State<NaverMapView> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userMapViewModel.setCenter();
+      userMapViewModel.isMarkerClicked.value = false;
     });
 
     return Scaffold(
@@ -60,21 +61,19 @@ class _NaverMapViewState extends State<NaverMapView> {
                 height: 200,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => const PrintRegistPage());
+                    Get.to(() => const DetailPage());
                   },
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width - 35,
-                          height: 100,
-                          child: const UserShopCardVIew(),
-                        ),
-                      );
+                  child: PageView(
+                    controller: userMapViewModel.pageController,
+                    onPageChanged: (page) {
+                      userMapViewModel.selectedPage.value = page;
                     },
+                    children: List.generate(
+                      2,
+                      (index) {
+                        return const UserShopCardVIew();
+                      },
+                    ),
                   ),
                 ),
               ),
