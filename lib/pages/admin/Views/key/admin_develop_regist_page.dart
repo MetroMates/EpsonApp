@@ -2,12 +2,9 @@ import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/admin/Controller/admin_regist_viewmodel.dart';
 import 'package:epson_app/pages/admin/Views/key/admin_regist_key_view.dart';
 import 'package:epson_app/pages/admin/Views/key/admin_regist_onboard_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AdminDevelopRegistPage extends StatefulWidget {
   const AdminDevelopRegistPage({super.key});

@@ -11,7 +11,7 @@ final class QRScannerView extends StatelessWidget {
       Future.delayed(
         const Duration(seconds: 2),
         () {
-          Get.off(() => const PrintRegistPage());
+          Get.to(() => const PrintRegistPage());
         },
       );
     });

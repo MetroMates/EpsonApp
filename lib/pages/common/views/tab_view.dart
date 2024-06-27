@@ -1,5 +1,6 @@
 import 'package:epson_app/getx_manager.dart';
 import 'package:epson_app/pages/admin/Views/key/admin_develop_regist_page.dart';
+import 'package:epson_app/pages/admin/Views/key/admin_regist_key_view.dart';
 import 'package:epson_app/pages/admin/Views/shop/admin_shop_regist_page.dart';
 import 'package:epson_app/pages/admin/Views/%08sale/admin_sale_report_page.dart';
 import 'package:epson_app/pages/common/controllers/tab_viewmodel.dart';
@@ -24,12 +25,14 @@ class TabView extends StatelessWidget {
             ? [
                 const AdminShopRegistPage(),
                 AdminSaleReportPage(),
+                AdminRegistKeyView(),
                 UserInfoPage(),
                 SettingView(),
               ]
             : [
                 const UserHomePage(),
                 const UserMapPage(),
+                const QRScannerView(),
                 UserInfoPage(),
                 SettingView(),
               ];
@@ -43,10 +46,7 @@ class TabView extends StatelessWidget {
             elevation: 0,
             backgroundColor: const Color.fromARGB(255, 17, 76, 171),
             onPressed: () {
-              // Handle center button action
-              Get.to(() => controller.isAdminPage.value
-                  ? const AdminDevelopRegistPage()
-                  : const QRScannerView());
+              controller.selectedIndex.value = 2;
             },
             child: Icon(
               controller.isAdminPage.value ? Icons.key : Icons.qr_code,
@@ -89,16 +89,16 @@ class TabView extends StatelessWidget {
                 context: context,
                 icon: Icons.person_outline,
                 label: 'my_info'.tr,
-                onTap: () => controller.selectedIndex.value = 2,
-                selected: controller.selectedIndex.value == 2,
+                onTap: () => controller.selectedIndex.value = 3,
+                selected: controller.selectedIndex.value == 3,
               ),
               const Spacer(),
               buildNavItem(
                 context: context,
                 icon: Icons.settings_outlined,
                 label: 'setting'.tr,
-                onTap: () => controller.selectedIndex.value = 3,
-                selected: controller.selectedIndex.value == 3,
+                onTap: () => controller.selectedIndex.value = 4,
+                selected: controller.selectedIndex.value == 4,
               ),
             ],
           ),

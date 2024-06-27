@@ -10,7 +10,6 @@ class AdminRegistKeyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const SizedBox(),
         title: const Text('프린터 키 등록'),
       ),
       body: Column(

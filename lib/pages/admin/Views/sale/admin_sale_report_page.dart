@@ -12,7 +12,6 @@ final class AdminSaleReportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('판매 현황'),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: SingleChildScrollView(
