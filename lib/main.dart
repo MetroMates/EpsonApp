@@ -20,7 +20,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageService.init();
   await Env.initEnv(isDebug: true);
-  KakaoSdk.init(nativeAppKey: Env.kakaoNativeKey);
+  // KakaoSdk.init(nativeAppKey: Env.kakaoNativeKey);
   await NaverMapSdk.instance.initialize(
       clientId: Env.naverMapKey,
       onAuthFailed: (error) {
